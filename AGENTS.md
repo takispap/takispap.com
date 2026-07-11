@@ -36,7 +36,8 @@ Node ≥ 22.12. Verify tool/config choices against current docs before adopting 
 
 ## Where files go
 
-- `public/` — served verbatim at site root: favicon.svg, logo.svg (URL-referenced), fonts (`public/fonts/`), robots.txt, llms.txt, manifest icons.
+- `public/` — served verbatim at site root: favicon.svg, logo.svg (URL-referenced), robots.txt, llms.txt, manifest icons.
+- `src/assets/fonts/` — self-hosted webfont files (woff2 only, no CDN ever), consumed by **Astro's built-in Fonts API** (stable since v6). Wire in `astro.config.mjs`: `fonts: [{ provider: fontProviders.local(), name, cssVariable: "--font-<role>", options: { variants: [{ weight: "100 900", style: "normal", src: ["./src/assets/fonts/<file>.woff2"] }] } }]` (import `fontProviders` from `astro/config`); render in the layout head via `import { Font } from "astro:assets"` + `<Font cssVariable="--font-<role>" preload />` — preload essential faces only. The API generates @font-face, preload links and fallback-font metrics (serves the CLS ≈ 0 budget). Docs: https://docs.astro.build/en/guides/fonts/ + /en/reference/font-provider-reference/. Do NOT hand-roll @font-face in public/fonts.
 - `src/assets/` — every image referenced from pages/components/content: goes through `astro:assets` (AVIF/WebP, explicit dimensions, CLS-proof). Content images NEVER go in `public/` — that bypasses optimisation and the perf budget depends on it. SVGs used inside components are imported from here too.
 - `dist/` — build output. **Never hand-edit**: `pnpm build` wipes it, and it's gitignored so nothing in it reaches GitHub or Cloudflare Pages.
 

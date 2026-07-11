@@ -34,6 +34,12 @@ pnpm build        # must pass before any push
 
 Node ≥ 22.12. Verify tool/config choices against current docs before adopting — this stack drifts (the plan was written on Astro 6; Astro 7 shipped days later).
 
+## Where files go
+
+- `public/` — served verbatim at site root: favicon.svg, logo.svg (URL-referenced), fonts (`public/fonts/`), robots.txt, llms.txt, manifest icons.
+- `src/assets/` — every image referenced from pages/components/content: goes through `astro:assets` (AVIF/WebP, explicit dimensions, CLS-proof). Content images NEVER go in `public/` — that bypasses optimisation and the perf budget depends on it. SVGs used inside components are imported from here too.
+- `dist/` — build output. **Never hand-edit**: `pnpm build` wipes it, and it's gitignored so nothing in it reaches GitHub or Cloudflare Pages.
+
 ## Content flow
 
 Drafts live in the vault, never here. A piece lands in `src/content/` only when final (see plan §Publish flow). Frontmatter is schema-enforced via content collections.

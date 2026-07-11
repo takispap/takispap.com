@@ -1,0 +1,43 @@
+# AGENTS.md — takispap.com
+
+Personal site of Takis Papadopoulos (takispap): portfolio, writing, AI lab. Astro 7 static, Cloudflare Pages, no database, no cookie banner. Simple, smart, elegant, fun, fast. (CLAUDE.md symlinks here.)
+
+## Canonical sources — read before working, never decide from memory
+
+| What | Where |
+|---|---|
+| Operating manual (model routing, phase recipes, licensing, don't-do list) | vault `~/obsidian-vault/10-projects/takispap.com/handbook.md` — **read first** |
+| Decisions, IA, content model, phases (locked — DO NOT REOPEN) | vault `.../takispap.com/plan.md` |
+| Voice + positioning (all copy) | vault `.../takispap.com/voice.md` + voice-and-tone skill |
+| Design contract (all visual work) | `design.md` in this repo (after Phase 1; skeleton = vault `design-framework.md`) |
+| Task truth | Plane → project **Portfolio** |
+
+If the vault is unreachable (non-Zeus session), stop and say so — do not improvise strategy.
+
+## Hard rules
+
+- **Budgets are law:** ≤50 KB JS per page, LCP < 1.5 s mid-range mobile, CLS ≈ 0, WCAG 2.2 AA floor, `prefers-reduced-motion` respected everywhere.
+- **Zero JS by default.** An island must earn hydration; CSS/HTML first.
+- **No third-party scripts** (sole exception: Cloudflare analytics beacon), no CDN fonts, no CMS, ever.
+- **Tokens over raw values** — visual changes go through design.md's custom properties, then components.
+- **Published URLs never change**; restructures ship 301s.
+- **Licensing split:** /writing + /lab = CC BY-NC 4.0 (frontmatter `license` field); /work text = all rights reserved; company imagery/logos = © their owners, display only; /work excluded from llms.txt + AI training. Full policy in the handbook.
+- **No secrets in this repo** — it is public; gitleaks pre-commit enforces. Secrets live in Vaultwarden.
+- Copy ships only after the voice litmus tests and takis's approval. DNS/domain/publish actions are takis-only.
+
+## Dev
+
+```
+pnpm dev          # or: astro dev --background (manage: astro dev stop/status/logs)
+pnpm build        # must pass before any push
+```
+
+Node ≥ 22.12. Verify tool/config choices against current docs before adopting — this stack drifts (the plan was written on Astro 6; Astro 7 shipped days later).
+
+## Content flow
+
+Drafts live in the vault, never here. A piece lands in `src/content/` only when final (see plan §Publish flow). Frontmatter is schema-enforced via content collections.
+
+## Astro docs (consult before related tasks)
+
+- [Routing](https://docs.astro.build/en/guides/routing/) · [Components](https://docs.astro.build/en/basics/astro-components/) · [Content collections](https://docs.astro.build/en/guides/content-collections/) · [Styling](https://docs.astro.build/en/guides/styling/)

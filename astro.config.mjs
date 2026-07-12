@@ -34,18 +34,7 @@ export default defineConfig({
     localFont('Spline Sans VF', '--font-spline', 'spline-sans-vf.woff2', '300 700'),
     localFont('Plus Jakarta Sans VF', '--font-jakarta', 'plus-jakarta-vf.woff2', '200 800'),
     localFont('Outfit VF', '--font-outfit', 'outfit-vf.woff2', '100 900'),
+    localFont('Poppins VF', '--font-poppins', 'poppins-vf.woff2', '100 900'),
     localFont('General Sans VF', '--font-general', 'general-sans-vf.woff2', '200 700'),
-    {
-      // Poppins has no variable version — two static weights for comparison
-      provider: fontProviders.local(),
-      name: 'Poppins',
-      cssVariable: '--font-poppins',
-      options: {
-        variants: [
-          { src: ['./src/assets/fonts/poppins-400.woff2'], weight: '400', style: 'normal' },
-          { src: ['./src/assets/fonts/poppins-700.woff2'], weight: '700', style: 'normal' },
-        ],
-      },
-    },
   ],
 });

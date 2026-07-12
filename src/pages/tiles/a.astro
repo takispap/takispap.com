@@ -2,6 +2,15 @@
 import { Font } from 'astro:assets';
 import ThemeInit from '../../components/tiles/ThemeInit.astro';
 import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
+import Icon from '../../components/tiles/Icon.astro';
+import Mark from '../../components/tiles/Mark.astro';
+
+// per-word reveal helpers — static spans, no client JS
+const words = (s) => s.split(' ');
+const heroLine = 'Making complex things clear.';
+const heroSub = 'Twenty years through paper, web, VR, design systems and AI. The medium keeps changing; the job hasn’t.';
+const feelLead = 'A dark, warm room where type does the talking and the cinematic layer earns its keep. Bold and wide when it speaks, quiet everywhere else. Personality from words, motion and interaction — never decoration.';
+const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiums, enterprise design systems and a gaming social network. The thesis project lost its domain and the VR startup never found funding — both taught me more than the wins that followed.';
 ---
 
 <html lang="en">
@@ -11,28 +20,39 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content="noindex, nofollow" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Tile A — Warm cinematic dark</title>
+		<title>Tile A v2 — Warm cinematic dark</title>
 		<Font cssVariable="--font-archivo" preload />
 		<Font cssVariable="--font-mono" />
 		<ThemeInit />
 	</head>
 	<body>
 		<header class="site">
-			<a class="mark" href="/tiles/"><img src="/logo.svg" alt="tp mark — back to tile index" width="36" height="36" /></a>
-			<p class="tile-tag" style="view-transition-name: tile-a">Tile A — Warm cinematic dark</p>
+			<a class="mark" href="/tiles/" aria-label="Back to tile index"><Mark size={38} /></a>
+			<nav class="nav-sample" aria-label="Sample navigation">
+				<a class="u-link is-current" href="/tiles/a" aria-current="page">Work</a>
+				<a class="u-link" href="/tiles/">Writing</a>
+				<a class="u-link" href="/tiles/">Lab</a>
+				<a class="u-link" href="/tiles/">About</a>
+			</nav>
 			<ThemeToggle />
 		</header>
 
 		<main>
-			<section class="hero reveal">
-				<p class="eyebrow">Takis Papadopoulos · Senior product designer · Athens</p>
-				<h1 class="display">Making complex things&nbsp;clear.</h1>
-				<p class="sub">Twenty years through paper, web, VR, design systems and AI. The medium keeps changing; the job hasn't.</p>
+			<section class="hero">
+				<p class="eyebrow" style="view-transition-name: tile-a">Takis Papadopoulos · Senior product designer · Athens</p>
+				<h1 class="display intro-words">
+					{words(heroLine).map((w, i) => <span class="w" style={`--i:${i}`}>{w}</span>)}
+				</h1>
+				<p class="sub intro-words">
+					{words(heroSub).map((w, i) => <span class="w" style={`--i:${i + 5}`}>{w}</span>)}
+				</p>
 			</section>
 
 			<section class="reveal" aria-labelledby="feel-h">
 				<h2 id="feel-h">Feel</h2>
-				<p class="max-measure">The minhpham/lusion pole: a dark, warm room where type does the talking and the cinematic layer earns its keep. Bold and wide when it speaks, quiet everywhere else. Personality from words and motion — never decoration.</p>
+				<p class="lead reveal-words">
+					{words(feelLead).map((w, i) => <span class="w" style={`--i:${i % 14}`}>{w}</span>)}
+				</p>
 				<p class="chips" role="list">
 					<span class="chip" role="listitem">minimal</span>
 					<span class="chip" role="listitem">typographic</span>
@@ -44,15 +64,15 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 
 			<section class="reveal" aria-labelledby="type-h">
 				<h2 id="type-h">Type</h2>
-				<p class="spec-note">Stand-in face: <strong>Archivo</strong> variable (Omnibus-Type, SIL OFL) — weight 100–900, width 62–125%. Display runs wide (125%) and heavy; body runs normal width. One file, two voices.</p>
+				<p class="spec-note prose-measure">Stand-in face (fonts decided later, takis's call): <strong>Archivo</strong> variable — weight 100–900, width 62–125%. Display runs wide and heavy; body runs normal.</p>
 				<div class="specimen">
 					<p class="spec display">Display / clamp(2.75–7.75rem)</p>
 					<p class="spec t-h1">Heading 1 / clamp(2.1–3.5rem)</p>
 					<p class="spec t-h2">Heading 2 / clamp(1.65–2.35rem)</p>
 					<p class="spec t-h3">Heading 3 / clamp(1.3–1.65rem)</p>
 					<p class="spec t-h4">Heading 4 / clamp(1.08–1.25rem)</p>
-					<p class="spec t-body">Body / clamp(1–1.125rem) — measure capped at 65ch, line-height 1.6, real quotes “like so”, en-dashes – and tabular numerals 0123456789 where figures line up.</p>
-					<p class="spec t-small">Small / 0.875rem — metadata, dates, captions’ big sibling.</p>
+					<p class="spec t-body prose-measure">Body / clamp(1–1.125rem) — measure stays readable (~72ch) inside the fluid layout, line-height 1.6, real quotes “like so”, en-dashes – and tabular numerals 0123456789.</p>
+					<p class="spec t-small">Small / 0.875rem — metadata, dates.</p>
 					<p class="spec t-caption">Caption / 0.8125rem — the quietest voice in the room.</p>
 					<p class="spec t-mono">Mono / JetBrains Mono VF — code, tokens, the occasional shell prompt.</p>
 				</div>
@@ -60,7 +80,7 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 
 			<section class="reveal" aria-labelledby="colour-h">
 				<h2 id="colour-h">Colour</h2>
-				<p class="max-measure">Warm charcoal, warm bone, one amber accent. No pure black, no pure white anywhere. Tokens are authored in OKLCH with hex fallbacks and switch themes via <code>light-dark()</code> — system preference by default, manual override in the header. Dark is this tile's home; the hex fallback (older browsers) is the dark set.</p>
+				<p class="prose-measure">Warm charcoal, warm bone, one amber accent. No pure black or white. Tokens in OKLCH with hex fallbacks, themed via <code>light-dark()</code> — system default; the header switch overrides with a circular reveal (instant under reduced motion). The inline tp mark keeps its own fill tokens, so it can re-colour and animate.</p>
 				<div class="swatches">
 					<div class="swatch sw-bg"><span>--bg</span></div>
 					<div class="swatch sw-raised"><span>--bg-raised</span></div>
@@ -85,7 +105,7 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 
 			<section class="reveal" aria-labelledby="space-h">
 				<h2 id="space-h">Space &amp; layout</h2>
-				<p class="max-measure">One scale, generous by default — the dark room needs air. Corners barely rounded (4px): cinematic, not friendly-app. Depth comes from raised surfaces, not shadows.</p>
+				<p class="prose-measure">No fixed page width: the layout breathes with the screen through fluid side paddings (<code>clamp(1.25rem, 5vw, 7rem)</code>) — as much screen as the content can hold, with empty space doing the composing. Corners round where the hand goes (buttons, cards, code), stay quiet elsewhere.</p>
 				<div class="space-bars">
 					<div style="inline-size: var(--space-1)"><span>1 · 0.25rem</span></div>
 					<div style="inline-size: var(--space-2)"><span>2 · 0.5rem</span></div>
@@ -100,14 +120,15 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 			<section class="reveal" aria-labelledby="comp-h">
 				<h2 id="comp-h">Components</h2>
 
-				<p class="max-measure t-body">
-					I've designed food-delivery flows, VR tours of ancient stadiums, enterprise design systems and a gaming social network. The thesis project lost its domain and the VR startup never found funding — both taught me more than the wins that followed. These days I split my time between product work and <a href="/tiles/">Zeus</a>, the local-AI studio humming under my desk.
+				<p class="lead reveal-words prose-measure">
+					{words(bioLead).map((w, i) => <span class="w" style={`--i:${i % 14}`}>{w}</span>)}
 				</p>
+				<p class="t-body prose-measure">These days I split my time between product work and <a href="/tiles/">Zeus</a>, the local-AI studio humming under my desk.</p>
 
 				<div class="btn-row">
-					<a class="btn btn-primary" href="/tiles/">Read the case study</a>
-					<a class="btn btn-secondary" href="/tiles/">Download CV</a>
-					<a class="btn btn-ghost" href="/tiles/">All experiments</a>
+					<a class="btn btn-primary" href="/tiles/">Read the case study <Icon name="arrow-right" /></a>
+					<a class="btn btn-secondary" href="/tiles/">Download CV <Icon name="download" /></a>
+					<a class="btn btn-ghost" href="/tiles/">All experiments <Icon name="arrow-up-right" /></a>
 				</div>
 
 				<div class="card-row">
@@ -115,43 +136,44 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 						<p class="chip">design systems</p>
 						<h3 class="t-h3">BETA CAE — one system, three realities</h3>
 						<p class="t-small">Five years building a design system that spans desktop, web and VR/AR for an engineering suite — one language across every screen and headset.</p>
-						<a href="/tiles/">Read the case study</a>
+						<a class="card-link u-link" href="/tiles/">Read the case study <Icon name="arrow-up-right" /></a>
 					</article>
 					<article class="card">
 						<p class="chip chip-live">live</p>
 						<h3 class="t-h3">Zeus — the local AI studio</h3>
 						<p class="t-small">Agents, voice, image generation — running on one stubborn GPU in Athens. Self-funded; self-inflicted.</p>
-						<a href="/tiles/">See the experiments</a>
+						<a class="card-link u-link" href="/tiles/">See the experiments <Icon name="arrow-up-right" /></a>
 					</article>
 				</div>
 
 				<aside class="callout">
-					<p class="t-small"><strong>Token discipline.</strong> Every visual decision on this page is a custom property. Change it once, it changes everywhere — the same contract the real site keeps in <code>design.md</code>.</p>
+					<p class="t-small"><strong>Token discipline.</strong> Every visual decision on this page is a custom property — including the mark's fills and every icon's colour (all SVG inline). Change once, changes everywhere; the contract lives in <code>design.md</code>.</p>
 				</aside>
 
 				<figure>
-					<pre class="code"><code>/* the scroll choreography on this very page — CSS only, no JS */
-@supports (animation-timeline: view()) &#123;
-  @media (prefers-reduced-motion: no-preference) &#123;
-    .reveal &#123;
-      animation: rise 1ms linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 55%;
-    &#125;
-  &#125;
+					<pre class="code"><code>/* per-word reveal — static spans + CSS scroll timeline, zero JS */
+.reveal-words .w &#123;
+  animation: word-in 1ms linear both;
+  animation-timeline: view();
+  animation-range: entry calc(8% + var(--i) * 2.5%)
+                   entry calc(38% + var(--i) * 2.5%);
 &#125;</code></pre>
-					<figcaption class="t-caption">Figure + caption sample. The code block is real — it drives the reveals here.</figcaption>
+					<figcaption class="t-caption">Figure + caption sample. Real code — it drives the paragraphs above.</figcaption>
 				</figure>
 			</section>
 
 			<section class="reveal" aria-labelledby="motion-h">
-				<h2 id="motion-h">Motion</h2>
-				<ul class="max-measure">
-					<li><code>--motion-quick: 120ms</code> — hovers, presses (try the buttons above).</li>
-					<li><code>--motion-base: 240ms</code> — reveals, theme changes.</li>
-					<li><strong>Signature:</strong> cross-document View Transition — <a href="/tiles/">go back to the index</a> and watch the tile title morph. Pure CSS, zero JS.</li>
-					<li><strong>Choreography:</strong> sections on this page rise as they enter the viewport — CSS scroll-driven animation, no observer, no library.</li>
-					<li><strong>Reduced motion:</strong> everything above collapses to plain visibility. The page never needs motion to be read.</li>
+				<h2 id="motion-h">Motion &amp; micro-interactions</h2>
+				<ul class="prose-measure motion-list">
+					<li><strong>Intro:</strong> header settles down, hero words rise one by one on load.</li>
+					<li><strong>Appear:</strong> sections lift as they enter the viewport (CSS scroll timeline).</li>
+					<li><strong>Scroll reveal, per word:</strong> lead paragraphs sharpen from subtle to normal as you scroll — try the Feel and Components sections.</li>
+					<li><strong>Hover:</strong> nav links draw their underline; button icons nudge along their direction of travel; cards lift and warm their border.</li>
+					<li><strong>Click:</strong> buttons compress slightly on press.</li>
+					<li><strong>Theme switch:</strong> icon morph + circular reveal sweeping from the button (View Transition; instant under reduced motion).</li>
+					<li><strong>Signature:</strong> cross-document View Transition — <a href="/tiles/">back to the index</a>, the tile title morphs.</li>
+					<li><strong>Focus:</strong> keyboard Tab paints a subtle amber halo around anything interactive — try it.</li>
+					<li><strong>Reduced motion:</strong> every one of the above collapses to plain visibility. Content never waits for motion.</li>
 				</ul>
 			</section>
 
@@ -161,13 +183,13 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 					<p class="display nf-code">404</p>
 					<p class="t-h3">Nothing here but very good kerning.</p>
 					<p class="t-small">Either the link is old or I broke it. My money's on me.</p>
-					<a class="btn btn-primary" href="/tiles/">Go home</a>
+					<a class="btn btn-primary" href="/tiles/">Go home <Icon name="arrow-right" /></a>
 				</div>
 			</section>
 
 			<footer class="colophon">
-				<p class="t-caption">Stand-in fonts: Archivo (Omnibus-Type) + JetBrains Mono — both SIL OFL, self-hosted woff2, subsetting allowed. Premium upgrade candidates for this direction: <strong>PP Neue Montreal</strong> (Pangram Pangram — web licence priced per page-view tier per weight, free personal trial) or <strong>Söhne</strong> (Klim — one-off perpetual web licence, ~USD 60/style class, self-host woff2 as provided, no modification). Exact prices at the foundry checkout; subsetting rights checked before any purchase. Buying is a takis decision after the tile pick.</p>
-				<p class="t-caption">Theme: system default + manual override. Colours: OKLCH via <code>light-dark()</code>, hex fallback = dark set (this tile's home). Style tile — deleted after Phase 1 pick.</p>
+				<p class="t-caption">A v2 — takis's working direction (2026-07-12): per-word scroll reveal · fluid full-width layout, breathing paddings · all SVG inline (tp mark fill-tokenised; icons = <a href="https://lucide.dev">Lucide</a>, ISC, placeholders until takis draws his own) · theme switch with circular reveal · focus halo · rounded where the hand goes.</p>
+				<p class="t-caption">Fonts deferred (Archivo stands in). Theme: system default + override. Colours: OKLCH via <code>light-dark()</code>, hex fallback = dark set. Style tile — superseded sections get deleted as design.md forms.</p>
 			</footer>
 		</main>
 	</body>
@@ -195,7 +217,6 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 		--accent-contrast: light-dark(oklch(97.2% 0.011 76.6), oklch(18.6% 0.008 48.3));
 		--border: #3a312a;
 		--border: light-dark(oklch(87.2% 0.027 76.8), oklch(32.1% 0.018 60));
-		--focus-ring: var(--accent);
 
 		/* type */
 		--size-display: clamp(2.75rem, 1.1rem + 8.8vw, 7.75rem);
@@ -207,16 +228,23 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 		--size-small: 0.875rem;
 		--size-caption: 0.8125rem;
 
-		/* space */
+		/* space + fluid gutters (no fixed page width) */
 		--space-1: 0.25rem; --space-2: 0.5rem; --space-3: 1rem; --space-4: 1.5rem;
 		--space-5: 2.5rem; --space-6: 4rem; --space-7: 6.5rem;
+		--pad-x: clamp(1.25rem, 5vw, 7rem);
 
 		/* motion */
 		--motion-quick: 120ms;
 		--motion-base: 240ms;
 		--ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 
-		--radius: 4px;
+		/* corners — rounded where the hand goes */
+		--radius-s: 8px;
+		--radius-m: 14px;
+		--radius-l: 22px;
+
+		/* focus halo */
+		--halo: 0 0 0 2px var(--bg), 0 0 0 6px color-mix(in oklab, var(--accent) 45%, transparent);
 	}
 
 	* { box-sizing: border-box; margin: 0; }
@@ -226,53 +254,71 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 		font-family: var(--font-archivo), system-ui, sans-serif;
 		font-size: var(--size-body);
 		line-height: 1.6;
-		padding: clamp(1rem, 4vw, 3rem);
-		max-width: 68rem;
-		margin-inline: auto;
 	}
-	:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: 2px; }
-	a { color: var(--accent); text-underline-offset: 0.2em; transition: opacity var(--motion-quick) var(--ease-out); }
-	a:hover { opacity: 0.8; }
+	:focus-visible { outline: 2px solid transparent; border-radius: var(--radius-s); box-shadow: var(--halo); transition: box-shadow var(--motion-quick) var(--ease-out); }
+	a { color: var(--accent); text-underline-offset: 0.2em; }
+	.prose-measure { max-width: 72ch; }
 
-	.site { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-6); }
-	.tile-tag { font-size: var(--size-small); color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+	/* header / nav */
+	.site { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-4) var(--pad-x); }
+	.mark { display: inline-flex; border-radius: 999px; }
+	.mark .tp-mark { transition: rotate var(--motion-base) var(--ease-out), scale var(--motion-base) var(--ease-out); }
+	.mark:hover .tp-mark, .mark:focus-visible .tp-mark { rotate: -8deg; scale: 1.06; }
+	.nav-sample { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+	.u-link {
+		color: var(--text); text-decoration: none; font-weight: 550; padding-block: 0.15rem;
+		background-image: linear-gradient(var(--accent), var(--accent));
+		background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat;
+		transition: background-size var(--motion-base) var(--ease-out), color var(--motion-quick) var(--ease-out);
+	}
+	.u-link:hover, .u-link:focus-visible { background-size: 100% 2px; }
+	.u-link.is-current { color: var(--accent); background-size: 100% 2px; }
 	#theme-toggle {
-		font: inherit; font-size: var(--size-caption); cursor: pointer; padding: 0.4rem 0.9rem;
+		font: inherit; font-size: 1rem; cursor: pointer; padding: 0.55rem 0.7rem;
 		border-radius: 999px; border: 1px solid var(--border); background: var(--bg-raised); color: var(--text);
+		transition: border-color var(--motion-quick) var(--ease-out), scale var(--motion-quick) var(--ease-out);
 	}
+	#theme-toggle:hover { border-color: var(--accent); }
+	#theme-toggle:active { scale: 0.94; }
 
-	main > section { margin-bottom: var(--space-7); }
-	h2 { font-size: var(--size-h2); font-weight: 750; letter-spacing: -0.015em; margin-bottom: var(--space-4); }
-	.max-measure { max-width: 65ch; }
+	main { padding-inline: var(--pad-x); }
+	main > section { margin-block-end: var(--space-7); }
+	h2 { font-size: var(--size-h2); font-weight: 750; letter-spacing: -0.015em; margin-block-end: var(--space-4); }
+	.lead { font-size: var(--size-h4); }
 
-	.hero { padding-block: var(--space-6); }
-	.eyebrow { font-size: var(--size-small); color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--space-3); }
+	.hero { padding-block: var(--space-7) var(--space-6); }
+	.eyebrow { font-size: var(--size-small); color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-block-end: var(--space-3); }
 	.display {
 		font-size: var(--size-display);
 		font-weight: 840;
 		font-stretch: 125%;
 		line-height: 0.98;
 		letter-spacing: -0.025em;
-		margin-bottom: var(--space-4);
+		margin-block-end: var(--space-4);
 	}
-	.sub { font-size: var(--size-h4); color: var(--text-muted); max-width: 45ch; }
+	.sub { font-size: var(--size-h4); color: var(--text-muted); max-width: 52ch; }
+
+	/* per-word spans */
+	.intro-words .w, .reveal-words .w { display: inline-block; }
+	.intro-words .w { margin-inline-end: 0.24em; }
+	.reveal-words .w { margin-inline-end: 0.22em; }
 
 	/* type specimen */
-	.spec-note { color: var(--text-muted); max-width: 65ch; margin-bottom: var(--space-4); }
+	.spec-note { color: var(--text-muted); margin-block-end: var(--space-4); }
 	.specimen { display: grid; gap: var(--space-3); border-block: 1px solid var(--border); padding-block: var(--space-4); }
 	.spec.display { margin: 0; }
 	.t-h1 { font-size: var(--size-h1); font-weight: 800; font-stretch: 118%; letter-spacing: -0.02em; line-height: 1.05; }
 	.t-h2 { font-size: var(--size-h2); font-weight: 750; letter-spacing: -0.015em; }
 	.t-h3 { font-size: var(--size-h3); font-weight: 700; }
 	.t-h4 { font-size: var(--size-h4); font-weight: 650; }
-	.t-body { font-size: var(--size-body); max-width: 65ch; font-variant-numeric: tabular-nums; }
+	.t-body { font-size: var(--size-body); font-variant-numeric: tabular-nums; }
 	.t-small { font-size: var(--size-small); color: var(--text-muted); }
 	.t-caption { font-size: var(--size-caption); color: var(--text-muted); }
 	.t-mono { font-family: var(--font-mono), monospace; font-size: var(--size-small); }
 
 	/* colour */
 	.swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-2); margin-block: var(--space-4); }
-	.swatch { border-radius: var(--radius); border: 1px solid var(--border); padding: var(--space-4) var(--space-3); font-family: var(--font-mono), monospace; font-size: var(--size-caption); }
+	.swatch { border-radius: var(--radius-s); border: 1px solid var(--border); padding: var(--space-4) var(--space-3); font-family: var(--font-mono), monospace; font-size: var(--size-caption); }
 	.sw-bg { background: var(--bg); }
 	.sw-raised { background: var(--bg-raised); }
 	.sw-text { background: var(--text); color: var(--bg); }
@@ -280,41 +326,70 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 	.sw-accent { background: var(--accent); color: var(--accent-contrast); }
 	.sw-border { background: var(--border); }
 	table { border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: var(--size-small); }
-	caption { text-align: left; color: var(--text-muted); font-size: var(--size-caption); margin-bottom: var(--space-2); }
+	caption { text-align: left; color: var(--text-muted); font-size: var(--size-caption); margin-block-end: var(--space-2); }
 	th, td { text-align: left; padding: var(--space-2) var(--space-4) var(--space-2) 0; border-bottom: 1px solid var(--border); }
 
-	/* space */
-	.space-bars { display: grid; gap: var(--space-2); margin-top: var(--space-4); }
-	.space-bars div { background: var(--accent); block-size: 1.1rem; border-radius: 2px; position: relative; min-inline-size: 2px; }
+	/* space bars */
+	.space-bars { display: grid; gap: var(--space-2); margin-block-start: var(--space-4); }
+	.space-bars div { background: var(--accent); block-size: 1.1rem; border-radius: 3px; position: relative; min-inline-size: 2px; }
 	.space-bars span { position: absolute; inset-inline-start: calc(100% + 0.75rem); top: 50%; translate: 0 -50%; font-family: var(--font-mono), monospace; font-size: var(--size-caption); color: var(--text-muted); white-space: nowrap; }
 
 	/* components */
-	.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+	.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block-start: var(--space-3); }
 	.chip { display: inline-block; font-size: var(--size-caption); border: 1px solid var(--border); border-radius: 999px; padding: 0.2rem 0.7rem; color: var(--text-muted); }
 	.chip-live { color: var(--accent); border-color: var(--accent); }
 	.btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block: var(--space-5); }
-	.btn { display: inline-block; padding: 0.7rem 1.4rem; border-radius: var(--radius); font-weight: 650; text-decoration: none; transition: translate var(--motion-quick) var(--ease-out), opacity var(--motion-quick) var(--ease-out); }
-	.btn:hover { translate: 0 -2px; opacity: 1; }
-	.btn:active { translate: 0 0; }
+	.btn {
+		display: inline-flex; align-items: center; gap: 0.5rem;
+		padding: 0.7rem 1.4rem; border-radius: var(--radius-m); font-weight: 650; text-decoration: none;
+		transition: translate var(--motion-quick) var(--ease-out), scale var(--motion-quick) var(--ease-out), border-color var(--motion-quick) var(--ease-out);
+	}
+	.btn .icon { transition: translate var(--motion-base) var(--ease-out); }
+	.btn:hover { translate: 0 -2px; }
+	.btn:active { translate: 0 0; scale: 0.97; }
+	.btn:hover [class*='arrow-right'] { }
 	.btn-primary { background: var(--accent); color: var(--accent-contrast); }
+	.btn-primary:hover .icon { translate: 3px 0; }
 	.btn-secondary { border: 1px solid var(--text); color: var(--text); }
+	.btn-secondary:hover .icon { translate: 0 2px; }
 	.btn-ghost { color: var(--accent); }
-	.card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: var(--space-4); margin-block: var(--space-5); }
-	.card { background: var(--bg-raised); border-radius: var(--radius); padding: var(--space-4); display: grid; gap: var(--space-3); align-content: start; justify-items: start; }
-	.callout { border-inline-start: 3px solid var(--accent); background: var(--bg-raised); padding: var(--space-3) var(--space-4); border-radius: 0 var(--radius) var(--radius) 0; max-width: 65ch; margin-block: var(--space-5); }
+	.btn-ghost:hover .icon { translate: 2px -2px; }
+	.card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: var(--space-4); margin-block: var(--space-5); }
+	.card {
+		background: var(--bg-raised); border: 1px solid transparent; border-radius: var(--radius-m);
+		padding: var(--space-5) var(--space-4); display: grid; gap: var(--space-3); align-content: start; justify-items: start;
+		transition: translate var(--motion-base) var(--ease-out), border-color var(--motion-base) var(--ease-out);
+	}
+	.card:hover, .card:focus-within { translate: 0 -3px; border-color: var(--accent); }
+	.card-link { color: var(--accent); display: inline-flex; align-items: center; gap: 0.35rem; }
+	.card-link .icon { transition: translate var(--motion-base) var(--ease-out); }
+	.card:hover .card-link .icon, .card-link:focus-visible .icon { translate: 2px -2px; }
+	.callout { border-inline-start: 3px solid var(--accent); background: var(--bg-raised); padding: var(--space-3) var(--space-4); border-radius: 0 var(--radius-s) var(--radius-s) 0; max-width: 72ch; margin-block: var(--space-5); }
 	.callout .t-small { color: var(--text); }
 	figure { margin-block: var(--space-5); }
-	.code { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-4); overflow-x: auto; font-family: var(--font-mono), monospace; font-size: var(--size-small); line-height: 1.55; margin-bottom: var(--space-2); }
+	.code { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius-m); padding: var(--space-4); overflow-x: auto; font-family: var(--font-mono), monospace; font-size: var(--size-small); line-height: 1.55; margin-block-end: var(--space-2); max-width: 72ch; }
 	.code code { font-family: inherit; }
+	.motion-list { display: grid; gap: var(--space-2); padding-inline-start: 1.2em; }
 
 	/* 404 sample */
-	.frame-404 { border: 1px dashed var(--border); border-radius: var(--radius); padding: var(--space-6) var(--space-4); display: grid; gap: var(--space-3); justify-items: center; text-align: center; }
+	.frame-404 { border: 1px dashed var(--border); border-radius: var(--radius-l); padding: var(--space-6) var(--space-4); display: grid; gap: var(--space-3); justify-items: center; text-align: center; }
 	.nf-code { font-size: clamp(4rem, 16vw, 11rem); margin: 0; }
 
-	.colophon { border-top: 1px solid var(--border); padding-top: var(--space-4); display: grid; gap: var(--space-2); }
+	.colophon { border-top: 1px solid var(--border); padding-block: var(--space-4) var(--space-6); display: grid; gap: var(--space-2); }
 
-	/* scroll choreography — CSS only, progressive, reduced-motion off */
+	/* ---- motion registers ---- */
 	@keyframes rise { from { opacity: 0; translate: 0 1.5rem; } to { opacity: 1; translate: 0 0; } }
+	@keyframes word-in { from { opacity: 0.15; } to { opacity: 1; } }
+	@keyframes word-up { to { opacity: 1; translate: 0 0; } }
+	@keyframes fade-down { from { opacity: 0; translate: 0 -0.5rem; } to { opacity: 1; translate: 0 0; } }
+
+	/* intro (load) */
+	@media (prefers-reduced-motion: no-preference) {
+		.site { opacity: 0; animation: fade-down 500ms var(--ease-out) 60ms forwards; }
+		.intro-words .w { opacity: 0; translate: 0 0.4em; animation: word-up 560ms var(--ease-out) forwards; animation-delay: calc(120ms + var(--i) * 50ms); }
+	}
+
+	/* appear + per-word scroll reveal (scroll timeline, progressive) */
 	@supports (animation-timeline: view()) {
 		@media (prefers-reduced-motion: no-preference) {
 			.reveal {
@@ -322,9 +397,15 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 				animation-timeline: view();
 				animation-range: entry 0% entry 55%;
 			}
+			.reveal-words .w {
+				animation: word-in 1ms linear both;
+				animation-timeline: view();
+				animation-range: entry calc(8% + var(--i) * 2.5%) entry calc(38% + var(--i) * 2.5%);
+			}
 		}
 	}
+
 	@media (prefers-reduced-motion: reduce) {
-		.btn, a, .tile-card { transition: none; }
+		*, .btn, .card, .u-link, .mark .tp-mark { transition: none !important; animation: none !important; }
 	}
 </style>

@@ -1,0 +1,15 @@
+---
+// Inline Lucide icons (ISC licence, lucide.dev) — placeholder set until takis designs his own.
+// Inlined so colour follows currentColor and elements stay animatable.
+const svgs = import.meta.glob('../../assets/icons/*.svg', { query: '?raw', import: 'default', eager: true });
+const { name } = Astro.props;
+const raw = svgs[`../../assets/icons/${name}.svg`];
+if (!raw) throw new Error(`Icon not found: ${name} — add src/assets/icons/${name}.svg`);
+---
+
+<span class="icon" aria-hidden="true" set:html={raw} />
+
+<style is:global>
+	.icon { display: inline-flex; vertical-align: -0.15em; }
+	.icon svg { inline-size: 1.05em; block-size: 1.05em; display: block; }
+</style>

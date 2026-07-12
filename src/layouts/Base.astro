@@ -1,0 +1,60 @@
+---
+import { Font } from 'astro:assets';
+import ThemeInit from '../components/ThemeInit.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import Mark from '../components/Mark.astro';
+import '../styles/global.css';
+
+const { title, description } = Astro.props;
+
+const path = Astro.url.pathname;
+const nav = [
+	{ href: '/work', label: 'Work' },
+	{ href: '/writing', label: 'Writing' },
+	{ href: '/lab', label: 'Lab' },
+	{ href: '/about', label: 'About' },
+];
+const isCurrent = (href) => path === href || path.startsWith(href + '/');
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<Font cssVariable="--font-archivo" preload />
+		<Font cssVariable="--font-mono" />
+		<ThemeInit />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
+		<header class="site">
+			<a class="mark" href="/" aria-label="Home"><Mark size={38} /></a>
+			<nav class="site-nav" aria-label="Site">
+				{nav.map((item) => (
+					<a
+						class={`u-link${isCurrent(item.href) ? ' is-current' : ''}`}
+						href={item.href}
+						aria-current={isCurrent(item.href) ? 'page' : undefined}
+					>{item.label}</a>
+				))}
+			</nav>
+			<ThemeToggle />
+		</header>
+
+		<main id="main"><slot /></main>
+
+		<footer class="site-footer">
+			<h2 class="section-label">Contact</h2>
+			<a class="footer-email u-link" href="mailto:&#104;&#101;&#108;&#108;&#111;&#64;&#116;&#97;&#107;&#105;&#115;&#112;&#97;&#112;&#46;&#99;&#111;&#109;">&#104;&#101;&#108;&#108;&#111;&#64;&#116;&#97;&#107;&#105;&#115;&#112;&#97;&#112;&#46;&#99;&#111;&#109;</a>
+			<nav class="footer-links" aria-label="Social">
+				<a class="u-link" href="#"><!-- TODO: real profile URL from takis -->LinkedIn</a>
+				<a class="u-link" href="#"><!-- TODO: real profile URL from takis -->Instagram</a>
+			</nav>
+			<p class="t-caption">© 2026 Takis Papadopoulos</p>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import RiserWords from '../components/RiserWords.astro';
+
+const title = 'Work — Takis Papadopoulos';
+const description = 'Case studies from twenty years of product design — design systems, VR/AR, social, and mobile.';
+---
+
+<Base title={title} description={description}>
+	<section class="frame-statement">
+		<p class="eyebrow">Work</p>
+		<h1 class="display intro-words"><RiserWords text="Case studies, in the works." /></h1>
+		<p class="sub intro-words"><RiserWords text="Twenty years of shipped work, being written up with the evidence attached." start={5} /></p>
+	</section>
+</Base>

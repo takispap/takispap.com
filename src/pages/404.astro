@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import RiserWords from '../components/RiserWords.astro';
+import Icon from '../components/Icon.astro';
+
+const title = 'Page not found — Takis Papadopoulos';
+const description = 'Page not found.';
+---
+
+<Base title={title} description={description}>
+	<section class="frame-statement">
+		<p class="eyebrow">404</p>
+		<h1 class="display intro-words"><RiserWords text="Nothing here but very good kerning." /></h1>
+		<p class="sub intro-words"><RiserWords text="Either the link is old or I broke it. My money’s on me." start={6} /></p>
+		<p style="margin-block-start: var(--space-5)"><a class="btn btn-primary" href="/">Go home <Icon name="arrow-right" /></a></p>
+	</section>
+</Base>

@@ -1,17 +1,52 @@
 ---
+import Base from '../layouts/Base.astro';
+import RiserWords from '../components/RiserWords.astro';
+import Icon from '../components/Icon.astro';
 
+const title = 'Takis Papadopoulos — Senior product designer';
+const description = 'Takis Papadopoulos, senior product designer in Athens. Twenty years of making complex things clear — across paper, web, VR, design systems, and AI.';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Takis</title>
-	</head>
-	<body>
-		<h1>Takis</h1>
-	</body>
-</html>
+<Base title={title} description={description}>
+	<section class="frame-statement">
+		<p class="eyebrow">Takis Papadopoulos · Senior product designer · Athens</p>
+		<h1 class="display intro-words"><RiserWords text="Making complex things clear." accent="clear." /></h1>
+		<p class="sub intro-words"><RiserWords text="Twenty years through paper, web, VR, design systems and AI. The medium keeps changing; the job hasn’t." start={5} /></p>
+	</section>
+
+	<section aria-labelledby="work-h">
+		<h2 id="work-h" class="section-label">Selected work</h2>
+		<div class="card-row">
+			<article class="card">
+				<p class="chip">design systems</p>
+				<h3 class="t-h3">BETA CAE — one system, three realities</h3>
+				<p class="t-small">Five years building the design system for an engineering suite — one language across desktop, web, and VR/AR.</p>
+				<a class="card-link u-link" href="/work">Case study in the works <Icon name="arrow-up-right" /></a>
+			</article>
+			<article class="card">
+				<p class="chip">social</p>
+				<h3 class="t-h3">Kaizen Gaming — social, inside the platform</h3>
+				<p class="t-small">Two years of senior product design: a social network in a live gaming platform, keys to the design system, and the rewards programme.</p>
+				<a class="card-link u-link" href="/work">Case study in the works <Icon name="arrow-up-right" /></a>
+			</article>
+			<article class="card">
+				<p class="chip">mobile</p>
+				<h3 class="t-h3">efood — the everyday app, redesigned</h3>
+				<p class="t-small">App redesign for Greece’s largest food-delivery platform, across the food and shopping verticals.</p>
+				<a class="card-link u-link" href="/work">Case study in the works <Icon name="arrow-up-right" /></a>
+			</article>
+		</div>
+	</section>
+
+	<section aria-labelledby="writing-h">
+		<h2 id="writing-h" class="section-label">Latest writing</h2>
+		<p class="t-body prose-measure">Nothing here yet. The buffer is being written.</p>
+	</section>
+
+	<section class="frame-statement" aria-labelledby="lab-h">
+		<h2 id="lab-h" class="section-label eyebrow-slot">The lab</h2>
+		<p class="display reveal-words"><RiserWords text="An AI studio under the desk." accent="desk." /></p>
+		<p class="sub">Zeus — agents, voice, and image generation, all local, logged in the open. Self-funded; self-inflicted.</p>
+		<p><a class="btn btn-ghost" href="/lab">See the experiments <Icon name="arrow-up-right" /></a></p>
+	</section>
+</Base>

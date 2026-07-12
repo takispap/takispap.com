@@ -1,9 +1,9 @@
 ---
 // Inline Lucide icons (ISC licence, lucide.dev) — placeholder set until takis designs his own.
 // Inlined so colour follows currentColor and elements stay animatable.
-const svgs = import.meta.glob('../../assets/icons/*.svg', { query: '?raw', import: 'default', eager: true });
+const svgs = import.meta.glob('../assets/icons/*.svg', { query: '?raw', import: 'default', eager: true });
 const { name } = Astro.props;
-const raw = svgs[`../../assets/icons/${name}.svg`];
+const raw = svgs[`../assets/icons/${name}.svg`];
 if (!raw) throw new Error(`Icon not found: ${name} — add src/assets/icons/${name}.svg`);
 ---
 

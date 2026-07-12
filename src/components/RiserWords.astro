@@ -1,0 +1,7 @@
+---
+// Per-word masked riser helper (from tile A, generalised). Static spans, zero client JS.
+// Parent supplies the element + the `intro-words` / `reveal-words` class.
+const { text, accent, start = 0 } = Astro.props;
+const words = text.split(' ');
+---
+{words.map((w, i) => <span class={`w${accent && w === accent ? ' w-accent' : ''}`} style={`--i:${i + start}`}><span class="wi">{w}</span></span>)}

@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import RiserWords from '../components/RiserWords.astro';
+
+const title = 'Lab — Takis Papadopoulos';
+const description = 'Zeus, a local AI studio — experiments in agents, voice, and image generation.';
+---
+
+<Base title={title} description={description}>
+	<section class="frame-statement">
+		<p class="eyebrow">Lab</p>
+		<h1 class="display intro-words"><RiserWords text="Experiments in progress." /></h1>
+		<p class="sub intro-words"><RiserWords text="Zeus, the local AI studio: each experiment logged with status, stack, and result — including the ones that failed." start={3} /></p>
+	</section>
+</Base>

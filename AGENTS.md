@@ -16,8 +16,8 @@ If the vault is unreachable (non-Zeus session), stop and say so — do not impro
 
 ## Hard rules
 
-- **Budgets are law:** ≤50 KB JS per page, LCP < 1.5 s mid-range mobile, CLS ≈ 0, WCAG 2.2 AA floor, `prefers-reduced-motion` respected everywhere.
-- **Zero JS by default.** An island must earn hydration; CSS/HTML first.
+- **Budgets are law:** zero render-blocking JS; LCP ≤ 2.0 s mid-range mobile, CLS ≈ 0, INP < 200 ms (field, CF RUM); WCAG 2.2 AA floor; `prefers-reduced-motion` respected everywhere. The old ≤50 KB JS cap was DROPPED by takis 2026-07-12 — do not re-impose it, and do not use its absence as licence for sloppy loading.
+- **Static-first.** Content renders without JS on every page (JS off → full content, no show). Heavy layers (WebGL/3D, shaders, smooth scroll, audio) lazy-load after first paint, per page, code-split — and vanish under reduced-motion/save-data/touch fallback. Sound opt-in only, never autoplay. An island/effect must earn its place by experience value.
 - **No third-party scripts** (sole exception: Cloudflare analytics beacon), no CDN fonts, no CMS, ever.
 - **Tokens over raw values** — visual changes go through design.md's custom properties, then components.
 - **Published URLs never change**; restructures ship 301s.

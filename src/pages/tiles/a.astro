@@ -21,7 +21,7 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content="noindex, nofollow" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Tile A v2 — Warm cinematic dark</title>
+		<title>Tile A v3 — Warm cinematic dark</title>
 		<Font cssVariable="--font-archivo" preload />
 		<Font cssVariable="--font-mono" />
 		<ThemeInit />
@@ -42,7 +42,7 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 			<section class="hero">
 				<p class="eyebrow" style="view-transition-name: tile-a">Takis Papadopoulos · Senior product designer · Athens</p>
 				<h1 class="display intro-words">
-					{words(heroLine).map((w, i) => <span class="w" style={`--i:${i}`}><span class="wi">{w}</span></span>)}
+					{words(heroLine).map((w, i) => <span class={`w${w.startsWith('clear') ? ' w-accent' : ''}`} style={`--i:${i}`}><span class="wi">{w}</span></span>)}
 				</h1>
 				<p class="sub intro-words">
 					{words(heroSub).map((w, i) => <span class="w" style={`--i:${i + 5}`}><span class="wi">{w}</span></span>)}
@@ -67,14 +67,15 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 				<h2 id="type-h">Type</h2>
 				<p class="spec-note prose-measure">Stand-in face (fonts decided later, takis's call): <strong>Archivo</strong> variable — weight 100–900, width 62–125%. Display runs wide and heavy; body runs normal.</p>
 				<div class="specimen">
-					<p class="spec display">Display / clamp(2.75–7.75rem)</p>
+					<p class="spec display">Display / 11vw</p>
 					<p class="spec t-h1">Heading 1 / clamp(2.1–3.5rem)</p>
 					<p class="spec t-h2">Heading 2 / clamp(1.65–2.35rem)</p>
 					<p class="spec t-h3">Heading 3 / clamp(1.3–1.65rem)</p>
 					<p class="spec t-h4">Heading 4 / clamp(1.08–1.25rem)</p>
-					<p class="spec t-body prose-measure">Body / clamp(1–1.125rem) — measure stays readable (~72ch) inside the fluid layout, line-height 1.6, real quotes “like so”, en-dashes – and tabular numerals 0123456789.</p>
+					<p class="spec t-body prose-measure">Body / clamp(1–1.35rem) — measure stays readable (~72ch) inside the fluid layout, line-height 1.6, real quotes “like so”, en-dashes – and tabular numerals 0123456789.</p>
 					<p class="spec t-small">Small / 0.875rem — metadata, dates.</p>
 					<p class="spec t-caption">Caption / 0.8125rem — the quietest voice in the room.</p>
+					<p class="spec t-micro">Micro / 0.75rem tracked caps — eyebrows, indexes, tags; the one size that never scales.</p>
 					<p class="spec t-mono">Mono / JetBrains Mono VF — code, tokens, the occasional shell prompt.</p>
 				</div>
 			</section>
@@ -106,7 +107,7 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 
 			<section class="reveal" aria-labelledby="space-h">
 				<h2 id="space-h">Space &amp; layout</h2>
-				<p class="prose-measure">No fixed page width: the layout breathes with the screen through fluid side paddings (<code>clamp(1.25rem, 5vw, 7rem)</code>) — as much screen as the content can hold, with empty space doing the composing. Corners round where the hand goes — buttons run pill, cards and code round with a radius that scales with the screen (clamp), text and structure stay quiet.</p>
+				<p class="prose-measure">No fixed page width: the layout breathes with the screen through fluid side paddings (<code>max(1.25rem, 5vw)</code>, uncapped) — cap the type, never the layout; empty space does the composing. Corners round where the hand goes — buttons run pill, cards and code round with a radius that scales with the screen (clamp), text and structure stay quiet.</p>
 				<div class="space-bars">
 					<div style="inline-size: var(--space-1)"><span>1 · 0.25rem</span></div>
 					<div style="inline-size: var(--space-2)"><span>2 · 0.5rem</span></div>
@@ -189,7 +190,7 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 			</section>
 
 			<footer class="colophon">
-				<p class="t-caption">A v2 — takis's working direction (2026-07-12): per-word scroll reveal · fluid full-width layout, breathing paddings · all SVG inline (tp mark fill-tokenised; icons = <a href="https://lucide.dev">Lucide</a>, ISC, placeholders until takis draws his own) · theme switch with circular reveal · focus halo · rounded where the hand goes.</p>
+				<p class="t-caption">A v3 — takis's working direction (2026-07-12): viewport-sized display + invariant micro register (adaptive-scale study, design.md §0.5) · hero = full-viewport statement frame · per-word scroll reveal · fluid full-width layout, uncapped gutters · all SVG inline (tp mark fill-tokenised; icons = <a href="https://lucide.dev">Lucide</a>, ISC, placeholders until takis draws his own) · theme switch with circular reveal · focus halo · rounded where the hand goes.</p>
 				<p class="t-caption">Fonts deferred (Archivo stands in). Theme: system default + override. Colours: OKLCH via <code>light-dark()</code>, hex fallback = dark set. Style tile — superseded sections get deleted as design.md forms.</p>
 			</footer>
 		</main>
@@ -219,20 +220,22 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 		--border: #3a312a;
 		--border: light-dark(oklch(87.2% 0.027 76.8), oklch(32.1% 0.018 60));
 
-		/* type */
-		--size-display: clamp(2.75rem, 1.1rem + 8.8vw, 7.75rem);
+		/* type — cap type, never layout (design.md §0.5): display is viewport-sized,
+		   body rides clamp rails, micro register never scales */
+		--size-display: clamp(3rem, 11vw, 26rem);
 		--size-h1: clamp(2.1rem, 1.4rem + 2.8vw, 3.5rem);
 		--size-h2: clamp(1.65rem, 1.3rem + 1.4vw, 2.35rem);
 		--size-h3: clamp(1.3rem, 1.15rem + 0.7vw, 1.65rem);
-		--size-h4: clamp(1.08rem, 1rem + 0.35vw, 1.25rem);
-		--size-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+		--size-h4: clamp(1.08rem, 0.95rem + 0.55vw, 1.9rem);
+		--size-body: clamp(1rem, 0.94rem + 0.25vw, 1.35rem);
 		--size-small: 0.875rem;
 		--size-caption: 0.8125rem;
+		--size-micro: 0.75rem;
 
-		/* space + fluid gutters (no fixed page width) */
+		/* space + fluid gutters (no fixed page width, uncapped) */
 		--space-1: 0.25rem; --space-2: 0.5rem; --space-3: 1rem; --space-4: 1.5rem;
 		--space-5: 2.5rem; --space-6: 4rem; --space-7: 6.5rem;
-		--pad-x: clamp(1.25rem, 5vw, 7rem);
+		--pad-x: max(1.25rem, 5vw);
 
 		/* motion — fluid and eased (lusion register): quick for presses, base for hovers, slow for sweeps */
 		--motion-quick: 140ms;
@@ -250,6 +253,11 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 		/* focus halo */
 		--halo: 0 0 0 2px var(--bg), 0 0 0 6px color-mix(in oklab, var(--accent) 45%, transparent);
 	}
+
+	/* display recomputes per context: phones re-wrap big (never shrink relative to
+	   the screen), ultrawides get reined in — design.md §2 */
+	@media (max-width: 700px) { :root { --size-display: clamp(2.6rem, 17vw, 8rem); } }
+	@media (min-aspect-ratio: 21/9) { :root { --size-display: clamp(3rem, 8vw, 22rem); } }
 
 	* { box-sizing: border-box; margin: 0; }
 	body {
@@ -269,6 +277,7 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 	.mark .tp-mark { transition: rotate var(--motion-base) var(--ease-settle), scale var(--motion-base) var(--ease-settle); }
 	.mark:hover .tp-mark, .mark:focus-visible .tp-mark { rotate: -8deg; scale: 1.06; }
 	.nav-sample { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+	@media (max-width: 700px) { .site, .nav-sample { gap: var(--space-3); } }
 	.u-link {
 		color: var(--text); text-decoration: none; font-weight: 550; padding-block: 0.15rem;
 		background-image: linear-gradient(var(--accent), var(--accent));
@@ -290,8 +299,11 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 	h2 { font-size: var(--size-h2); font-weight: 750; letter-spacing: -0.015em; margin-block-end: var(--space-4); }
 	.lead { font-size: var(--size-h4); }
 
-	.hero { padding-block: var(--space-7) var(--space-6); }
-	.eyebrow { font-size: var(--size-small); color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-block-end: var(--space-3); }
+	/* hero = full-viewport statement frame (design.md §0.5): micro label top,
+	   viewport-sized display anchored low-left, spine sentence parked lower-right */
+	.hero { min-block-size: calc(100svh - 7rem); display: grid; grid-template-rows: auto 1fr auto; padding-block: var(--space-5) var(--space-6); }
+	.eyebrow { font-size: var(--size-micro); color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase; }
+	.hero .display { align-self: end; margin-block-end: var(--space-5); }
 	.display {
 		font-size: var(--size-display);
 		font-weight: 840;
@@ -300,7 +312,9 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 		letter-spacing: -0.025em;
 		margin-block-end: var(--space-4);
 	}
-	.sub { font-size: var(--size-h4); color: var(--text-muted); max-width: 52ch; }
+	.display .w-accent .wi { color: var(--accent); }
+	.sub { font-size: var(--size-h4); color: var(--text-muted); max-width: 40ch; justify-self: end; }
+	@media (max-width: 700px) { .sub { justify-self: start; } }
 
 	/* per-word spans — clip box + riser: words rise from behind their own line */
 	.intro-words .w, .reveal-words .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-block-end: 0.06em; margin-block-end: -0.06em; }
@@ -320,6 +334,7 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 	.t-small { font-size: var(--size-small); color: var(--text-muted); }
 	.t-caption { font-size: var(--size-caption); color: var(--text-muted); }
 	.t-mono { font-family: var(--font-mono), monospace; font-size: var(--size-small); }
+	.t-micro { font-size: var(--size-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
 
 	/* colour */
 	.swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-2); margin-block: var(--space-4); }

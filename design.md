@@ -1,6 +1,6 @@
 # design.md — the living design contract
 
-v1, 2026-07-12. Direction **A — warm cinematic dark** (takis's pick), tuned to v2.1 on `/tiles/a`. Every visual decision continues **from this file, never from memory**. The style tile and this file must never diverge: change one, change the other, same commit.
+v1.1, 2026-07-12 (s03: adaptive-scale study folded in, §0.5). Direction **A — warm cinematic dark** (takis's pick), tuned to v3 on `/tiles/a`. Every visual decision continues **from this file, never from memory**. The style tile and this file must never diverge: change one, change the other, same commit.
 
 Status marks: ✅ decided · 🔧 working (live on the tile, still tunable) · ⏳ open (owner named).
 
@@ -22,6 +22,21 @@ Studied 2026-07-12 (HTML + bundle fingerprints + user-feel read):
 
 **Lineage guard:** if a visitor who knows minh/lusion can name an element's source, redo it. Register may rhyme; devices must be ours (the masked word-risers, Athens living accent and circular theme sweep are examples of ours).
 
+### 0.5 Adaptive-scale study (2026-07-12 s03 — 85 takis screenshots, 4K 32" + phone, + live CSS extraction)
+
+Why their sparse pages fill a 4K monitor and ours didn't — the mechanics, verified against both sites' shipped CSS:
+
+- **They cap type, never layout.** Neither site has a max-width container (validates our fluid law). minh: `1rem = 100vw/108` above 1200px — everything scales linearly forever. lusion: heroes in raw `8–13vw`, body/UI on `clamp(min-rem, 1vw, max-rem)` rails so text grows with the screen but stops before absurd. Our old display cap (7.75rem = 124px ≈ 6% of a 4K frame's height vs their 15–22%) was the whole gap.
+- **Two type roles, one enormous jump.** Monumental display + ~12px tracked-caps micro label; almost nothing between. Hierarchy = the size jump + one accent-promoted element, not a ladder.
+- **3–8 display words per statement screen.** Sentences exist only as a smaller off-axis block (lower-right third). Word count NEVER changes on mobile — headlines re-wrap (one word per line at ~22–30vw) instead of shrinking; whitespace survives the collapse (5–7vw gutters); each site ports its signature medium untouched (real WebGL on phone / full-bleed portrait film).
+- **Emptiness is composed:** content anchors to edges/thirds, never centre-block; one non-text protagonist claims 40–75% of the frame at low luminance; one "breath" object sits in the void; micro labels do all wayfinding.
+- **Chrome never scales.** Nav/toggles stay rem-small at 4K — restraint reads as confidence. Micro register is viewport-invariant (same physical size on 4K and phone).
+- **Density rhythm ~2:1** sparse statement screens to dense information screens.
+
+**Adopt (adapted):** viewport-sized display with clamp-rail body (tokens in §2) · two-register structural pages (h1–h4 ladder stays long-form-only) · edges/thirds composition + off-axis secondary block · invariant micro register + invariant chrome · re-wrap-don't-shrink mobile law · 2:1 density pacing · ultrawide (≥21:9) type guard.
+
+**Refuse:** minh's vw-root as global mechanism (breaks user font-size prefs/zoom — body stays rem-railed, a11y law wins) · lusion's "+" crop-marks, ghost watermark type and number-pairing device (their signatures) · minh's centre type-over-portrait hero anatomy. Void-texture device of our own: ⏳ decided with the scene underlay (§5 heavy layer).
+
 ---
 
 ## 1. Feel
@@ -34,8 +49,10 @@ Translation, the tiebreaker paragraph: *a dark, warm room where type does the ta
 
 - ⏳ **Faces: DEFERRED — takis's call.** Live comparison at `/tiles/fonts` (his 8: Epilogue, Sora, General Sans, Outfit, Spline Sans, Plus Jakarta, Poppins-VF, JetBrains Mono) + premium shortlist in moodboard (PP Neue Montreal / Söhne / Tiempos / ABC Diatype). Until then **Archivo VF stands in** (display: wide 118–125% + heavy 800–840; body: normal width). Mono: **JetBrains Mono VF** (working keep).
 - ✅ Mechanism: Astro Fonts API, `fontProviders.local()`, self-hosted woff2 in `src/assets/fonts/`, `<Font preload />` for essential faces only. No CDN, ever. Recipe in AGENTS.md.
-- ✅ Fluid scale (tokens live in the tile):
-  `--size-display: clamp(2.75rem, 1.1rem + 8.8vw, 7.75rem)` · h1 `clamp(2.1–3.5rem)` · h2 `clamp(1.65–2.35rem)` · h3 `clamp(1.3–1.65rem)` · h4 `clamp(1.08–1.25rem)` · body `clamp(1–1.125rem)` · small `0.875rem` · caption `0.8125rem`.
+- 🔧 Fluid scale, re-cut after the §0.5 study (tokens live in the tile):
+  `--size-display: clamp(3rem, 11vw, 26rem)` — viewport-sized, ≈20% of frame height on any desktop; phone (≤700px) recomputes to `clamp(2.6rem, 17vw, 8rem)` (headlines re-wrap, never shrink relative to the screen); ultrawide (≥21:9) drops to `8vw`.
+  h1 `clamp(2.1–3.5rem)` · h2 `clamp(1.65–2.35rem)` · h3 `clamp(1.3–1.65rem)` — the long-form ladder, unchanged · h4/lead `clamp(1.08rem, 0.95rem + 0.55vw, 1.9rem)` · body `clamp(1rem, 0.94rem + 0.25vw, 1.35rem)` · small `0.875rem` · caption `0.8125rem` · **micro `0.75rem` tracked caps (0.14em), viewport-invariant** — eyebrows, indexes, tags.
+- ✅ **Two registers on structural pages** (Home, Lab, indexes): monumental display + micro label carry everything; hierarchy = the size jump + at most one accent-promoted word. The h1–h4 ladder belongs to long-form (case studies, articles) only.
 - ✅ **Prose measure ~72ch** (takis: "perfect"); display/structure run full width. Line-height 1.6 body, ~0.98 display.
 - ✅ Real quotes/dashes, tabular numerals in columns, no faux bold/italic.
 
@@ -59,7 +76,9 @@ Translation, the tiebreaker paragraph: *a dark, warm room where type does the ta
 
 ## 4. Space & layout
 
-- ✅ **No fixed page width.** Fluid gutters `--pad-x: clamp(1.25rem, 5vw, 7rem)`; the screen is used, empty space composes. Prose capped at 72ch.
+- ✅ **No fixed page width — cap type, never layout** (§0.5). Fluid gutters `--pad-x: max(1.25rem, 5vw)`, uncapped; the screen is used, empty space composes. Prose capped at 72ch.
+- 🔧 **Composition laws (§0.5):** statement sections anchor to edges/thirds, never centre-block; secondary text parks off-axis (lower-right third on wide screens); 3–8 display words per statement screen; density paces ~2 sparse screens per dense one on Home/Lab. **Chrome never scales** — header, nav, toggles stay rem-sized at 4K.
+- ✅ **Mobile collapse law:** word count invariant — headlines re-wrap, whitespace survives, gutters stay 5–7vw, the signature layer ports untouched (or dies cleanly under reduced-motion/save-data, never degrades to a lesser version).
 - ✅ Spacing scale `--space-1…7`: 0.25 / 0.5 / 1 / 1.5 / 2.5 / 4 / 6.5 rem; sections separated by `--space-7`. Generous by default — the dark room needs air.
 - 🔧 **Corners round where the hand goes, radius scales with the viewport:** `--radius-s: clamp(6px, 0.4vw+4px, 10px)` · `-m: clamp(12px, 1vw+8px, 20px)` · `-l: clamp(18px, 2vw+12px, 34px)`; buttons are pills. ⏳ Adaptive-radius rules to refine with takis (lusion register).
 - ✅ Depth = raised surfaces (`--bg-raised`) + hairlines, not shadows. Container queries over device breakpoints as the mindset.
@@ -105,7 +124,7 @@ voice.md governs every string. Microcopy: outcome-verb buttons, zero cleverness 
 
 ## Page structures (v1 skeleton — plan.md §Page structures + reference anatomy)
 
-- **Home** — the dark room. Hero: name-line + spine sentence in per-word risers over (future) scene underlay; 3–4 selected work cards; latest writing; lab teaser; contact strip. Fewest words on the site.
+- **Home** — the dark room. Hero = a full-viewport statement frame (§0.5): micro eyebrow, viewport-sized name-line in per-word risers over (future) scene underlay, spine sentence parked lower-right; then 3–4 selected work cards; latest writing; lab teaser; contact strip. Fewest words on the site, ~2:1 sparse-to-dense pacing.
 - **Work / Writing indexes** — calm, typographic lists/grids; filters only when three items need them.
 - **Case study / Article** — long-form at 72ch, evidence-dense, print-friendly (case studies).
 - **Lab** — the second dark-room surface: experiment cards in changelog register; where the living accent and future scenes belong.

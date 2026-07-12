@@ -1,0 +1,307 @@
+---
+import { Font } from 'astro:assets';
+import ThemeInit from '../../components/tiles/ThemeInit.astro';
+import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Tile B — Editorial precision light</title>
+		<Font cssVariable="--font-fraunces" preload />
+		<Font cssVariable="--font-instrument" preload />
+		<Font cssVariable="--font-mono" />
+		<ThemeInit />
+	</head>
+	<body>
+		<header class="site">
+			<a class="mark" href="/tiles/"><img src="/logo.svg" alt="tp mark — back to tile index" width="36" height="36" /></a>
+			<p class="tile-tag" style="view-transition-name: tile-b">Tile B — Editorial precision light</p>
+			<ThemeToggle />
+		</header>
+
+		<main>
+			<section class="hero framed">
+				<p class="eyebrow">Senior product designer · Athens, Greece</p>
+				<h1 class="display">Takis Papadopoulos</h1>
+				<p class="sub">Making complex things clear and usable — for twenty years, across every medium the web has had.</p>
+			</section>
+
+			<section class="framed" aria-labelledby="feel-h">
+				<h2 id="feel-h">Feel</h2>
+				<p class="max-measure">The henriheymans/karinasirqueira pole: warm paper, a serif with opinions, hairline frames, one quiet olive accent. Precision as personality. Deliberately zero cinema — this tile proves the identity stands with no WebGL, no choreography, nothing but type, space and words. It is also what reduced-motion and low-end visitors of any direction would get.</p>
+				<p class="chips" role="list">
+					<span class="chip" role="listitem">minimal</span>
+					<span class="chip" role="listitem">typographic</span>
+					<span class="chip" role="listitem">precise</span>
+					<span class="chip" role="listitem">editorial</span>
+					<span class="chip" role="listitem">honest</span>
+				</p>
+			</section>
+
+			<section class="framed" aria-labelledby="type-h">
+				<h2 id="type-h">Type</h2>
+				<p class="spec-note">Stand-in faces: <strong>Fraunces</strong> variable for display (Undercase Type, SIL OFL — optical size axis, warm “wonky” serif) and <strong>Instrument Sans</strong> variable for body (SIL OFL). The serif speaks; the sans works.</p>
+				<div class="specimen">
+					<p class="spec display">Display / clamp(2.75–6.5rem)</p>
+					<p class="spec t-h1">Heading 1 / clamp(2.1–3.5rem)</p>
+					<p class="spec t-h2">Heading 2 / clamp(1.65–2.35rem)</p>
+					<p class="spec t-h3">Heading 3 / clamp(1.3–1.65rem)</p>
+					<p class="spec t-h4">Heading 4 / clamp(1.08–1.25rem)</p>
+					<p class="spec t-body">Body / clamp(1–1.125rem) — Instrument Sans, measure capped at 65ch, line-height 1.65, real quotes “like so”, en-dashes – and tabular numerals 0123456789 in columns.</p>
+					<p class="spec t-small">Small / 0.875rem — metadata, dates, index lines.</p>
+					<p class="spec t-caption">Caption / 0.8125rem — footnotes, figure credits.</p>
+					<p class="spec t-mono">Mono / JetBrains Mono VF — code and tokens, sparingly.</p>
+				</div>
+			</section>
+
+			<section class="framed" aria-labelledby="colour-h">
+				<h2 id="colour-h">Colour</h2>
+				<p class="max-measure">Warm off-white paper, near-black ink, deep olive as the single accent — an Athens colour that isn't the postcard blue. No pure black or white anywhere. Tokens in OKLCH with hex fallbacks, themed via <code>light-dark()</code>; system default, manual override above. Light is home; the fallback set is light.</p>
+				<div class="swatches">
+					<div class="swatch sw-bg"><span>--bg</span></div>
+					<div class="swatch sw-raised"><span>--bg-raised</span></div>
+					<div class="swatch sw-text"><span>--text</span></div>
+					<div class="swatch sw-muted"><span>--text-muted</span></div>
+					<div class="swatch sw-accent"><span>--accent</span></div>
+					<div class="swatch sw-border"><span>--border</span></div>
+				</div>
+				<table>
+					<caption>Measured contrast (WCAG 2.2) — doubling as the table sample</caption>
+					<thead>
+						<tr><th scope="col">Pair</th><th scope="col">Light theme</th><th scope="col">Dark theme</th><th scope="col">Floor</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>text / bg</td><td>16.83:1</td><td>15.34:1</td><td>4.5:1</td></tr>
+						<tr><td>muted / bg</td><td>6.67:1</td><td>7.05:1</td><td>4.5:1</td></tr>
+						<tr><td>accent / bg</td><td>8.00:1</td><td>10.02:1</td><td>4.5:1</td></tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section class="framed" aria-labelledby="space-h">
+				<h2 id="space-h">Space &amp; layout</h2>
+				<p class="max-measure">The same scale as every direction, but the layout language is the frame: content sits in hairline-bordered blocks, square corners, no shadows ever. Lines, not elevation.</p>
+				<div class="space-bars">
+					<div style="inline-size: var(--space-1)"><span>1 · 0.25rem</span></div>
+					<div style="inline-size: var(--space-2)"><span>2 · 0.5rem</span></div>
+					<div style="inline-size: var(--space-3)"><span>3 · 1rem</span></div>
+					<div style="inline-size: var(--space-4)"><span>4 · 1.5rem</span></div>
+					<div style="inline-size: var(--space-5)"><span>5 · 2.5rem</span></div>
+					<div style="inline-size: var(--space-6)"><span>6 · 4rem</span></div>
+					<div style="inline-size: var(--space-7)"><span>7 · 6.5rem</span></div>
+				</div>
+			</section>
+
+			<section class="framed" aria-labelledby="comp-h">
+				<h2 id="comp-h">Components</h2>
+
+				<p class="max-measure t-body">
+					I've designed food-delivery flows, VR tours of ancient stadiums, enterprise design systems and a gaming social network. The thesis project lost its domain and the VR startup never found funding — both taught me more than the wins that followed. These days I split my time between product work and <a href="/tiles/">Zeus</a>, the local-AI studio humming under my desk.
+				</p>
+
+				<div class="btn-row">
+					<a class="btn btn-primary" href="/tiles/">Read the case study</a>
+					<a class="btn btn-secondary" href="/tiles/">Download CV</a>
+					<a class="btn btn-ghost" href="/tiles/">All experiments</a>
+				</div>
+
+				<div class="card-row">
+					<article class="card">
+						<p class="chip">design systems</p>
+						<h3 class="t-h3">BETA CAE — one system, three realities</h3>
+						<p class="t-small">Five years building a design system that spans desktop, web and VR/AR for an engineering suite — one language across every screen and headset.</p>
+						<a href="/tiles/">Read the case study</a>
+					</article>
+					<article class="card">
+						<p class="chip chip-live">live</p>
+						<h3 class="t-h3">Zeus — the local AI studio</h3>
+						<p class="t-small">Agents, voice, image generation — running on one stubborn GPU in Athens. Self-funded; self-inflicted.</p>
+						<a href="/tiles/">See the experiments</a>
+					</article>
+				</div>
+
+				<aside class="callout">
+					<p class="t-small"><strong>Token discipline.</strong> Every visual decision on this page is a custom property. Change it once, it changes everywhere — the same contract the real site keeps in <code>design.md</code>.</p>
+				</aside>
+
+				<figure>
+					<pre class="code"><code>/* the whole theme mechanism of this tile — two lines per token */
+--bg: #fcfbf7;                              /* hex fallback   */
+--bg: light-dark(oklch(98.8% 0.005 95.1),   /* light + dark   */
+                 oklch(19.5% 0.006 106.9)); /* via OKLCH      */</code></pre>
+					<figcaption class="t-caption">Figure + caption sample. Real code — the token pattern used on this page.</figcaption>
+				</figure>
+			</section>
+
+			<section class="framed" aria-labelledby="motion-h">
+				<h2 id="motion-h">Motion</h2>
+				<ul class="max-measure">
+					<li><code>--motion-quick: 120ms</code> — hovers and presses; the only animation register this tile owns.</li>
+					<li><strong>Signature:</strong> cross-document View Transition — <a href="/tiles/">back to the index</a>, watch the title morph. Pure CSS; the single site-wide motion pattern.</li>
+					<li><strong>No choreography by design.</strong> Restraint is the statement here. If the site can't feel crafted in this tile, motion elsewhere is make-up.</li>
+				</ul>
+			</section>
+
+			<section class="framed" aria-labelledby="nf-h">
+				<h2 id="nf-h">404 sample</h2>
+				<div class="frame-404">
+					<p class="display nf-code">404</p>
+					<p class="t-h3">This page is unpublished, unwritten, or unwise.</p>
+					<p class="t-small">If a link brought you here, I owe that link an edit.</p>
+					<a class="btn btn-primary" href="/tiles/">Back to the front page</a>
+				</div>
+			</section>
+
+			<footer class="colophon">
+				<p class="t-caption">Stand-in fonts: Fraunces (Undercase Type) + Instrument Sans + JetBrains Mono — all SIL OFL, self-hosted woff2, subsetting allowed. Premium upgrade candidate for this direction: <strong>Tiempos</strong> (Klim — one-off perpetual web licence, ~USD 60/style class, page-view or unique-user metric, self-host woff2 as provided, no modification). Exact price at klim.co.nz checkout; subsetting rights checked before purchase. Buying is a takis decision after the tile pick.</p>
+				<p class="t-caption">Theme: system default + manual override. Colours: OKLCH via <code>light-dark()</code>, hex fallback = light set (this tile's home). Style tile — deleted after Phase 1 pick.</p>
+			</footer>
+		</main>
+	</body>
+</html>
+
+<style is:global>
+	:root { color-scheme: light dark; }
+	:root[data-theme='light'] { color-scheme: light; }
+	:root[data-theme='dark'] { color-scheme: dark; }
+	@view-transition { navigation: auto; }
+
+	:root {
+		/* ---- Tile B tokens. Hex fallback = light (home theme); capable browsers get OKLCH light-dark() ---- */
+		--bg: #fcfbf7;
+		--bg: light-dark(oklch(98.8% 0.005 95.1), oklch(19.5% 0.006 106.9));
+		--bg-raised: #f6f5ef;
+		--bg-raised: light-dark(oklch(96.9% 0.008 98.9), oklch(23.4% 0.007 107));
+		--text: #1a1a18;
+		--text: light-dark(oklch(21.7% 0.004 106.7), oklch(94% 0.01 93.6));
+		--text-muted: #5c5a52;
+		--text-muted: light-dark(oklch(46.7% 0.013 95.3), oklch(70.7% 0.016 98.4));
+		--accent: #44541f;
+		--accent: light-dark(oklch(41.9% 0.079 123.9), oklch(80% 0.106 119.8));
+		--accent-contrast: #fcfbf7;
+		--accent-contrast: light-dark(oklch(98.8% 0.005 95.1), oklch(19.5% 0.006 106.9));
+		--border: #dbd9ce;
+		--border: light-dark(oklch(88.4% 0.015 98.3), oklch(34.6% 0.012 107));
+		--focus-ring: var(--accent);
+
+		--size-display: clamp(2.75rem, 1.2rem + 7vw, 6.5rem);
+		--size-h1: clamp(2.1rem, 1.4rem + 2.8vw, 3.5rem);
+		--size-h2: clamp(1.65rem, 1.3rem + 1.4vw, 2.35rem);
+		--size-h3: clamp(1.3rem, 1.15rem + 0.7vw, 1.65rem);
+		--size-h4: clamp(1.08rem, 1rem + 0.35vw, 1.25rem);
+		--size-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+		--size-small: 0.875rem;
+		--size-caption: 0.8125rem;
+
+		--space-1: 0.25rem; --space-2: 0.5rem; --space-3: 1rem; --space-4: 1.5rem;
+		--space-5: 2.5rem; --space-6: 4rem; --space-7: 6.5rem;
+
+		--motion-quick: 120ms;
+		--motion-base: 240ms;
+		--ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+		--radius: 0px;
+	}
+
+	* { box-sizing: border-box; margin: 0; }
+	body {
+		background: var(--bg);
+		color: var(--text);
+		font-family: var(--font-instrument), system-ui, sans-serif;
+		font-size: var(--size-body);
+		line-height: 1.65;
+		padding: clamp(1rem, 4vw, 3rem);
+		max-width: 68rem;
+		margin-inline: auto;
+	}
+	:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+	a { color: var(--accent); text-underline-offset: 0.2em; transition: opacity var(--motion-quick) var(--ease-out); }
+	a:hover { opacity: 0.75; }
+
+	.site { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-5); }
+	.tile-tag { font-size: var(--size-small); color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+	#theme-toggle {
+		font: inherit; font-size: var(--size-caption); cursor: pointer; padding: 0.4rem 0.9rem;
+		border: 1px solid var(--border); border-radius: 0; background: var(--bg-raised); color: var(--text);
+	}
+
+	/* the frame language */
+	main { display: grid; gap: var(--space-4); }
+	.framed { border: 1px solid var(--border); padding: var(--space-5) var(--space-4); }
+	main > footer { padding-inline: var(--space-4); }
+
+	h2 { font-family: var(--font-fraunces), serif; font-size: var(--size-h2); font-weight: 560; font-optical-sizing: auto; letter-spacing: -0.01em; margin-bottom: var(--space-4); }
+	.max-measure { max-width: 65ch; }
+
+	.hero { padding-block: var(--space-6); }
+	.eyebrow { font-size: var(--size-small); color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--space-3); }
+	.display {
+		font-family: var(--font-fraunces), serif;
+		font-size: var(--size-display);
+		font-weight: 480;
+		font-optical-sizing: auto;
+		line-height: 1.02;
+		letter-spacing: -0.02em;
+		margin-bottom: var(--space-4);
+	}
+	.sub { font-size: var(--size-h4); color: var(--text-muted); max-width: 48ch; }
+
+	.spec-note { color: var(--text-muted); max-width: 65ch; margin-bottom: var(--space-4); }
+	.specimen { display: grid; gap: var(--space-3); border-block: 1px solid var(--border); padding-block: var(--space-4); }
+	.spec.display { margin: 0; }
+	.t-h1 { font-family: var(--font-fraunces), serif; font-size: var(--size-h1); font-weight: 540; letter-spacing: -0.015em; line-height: 1.08; }
+	.t-h2 { font-family: var(--font-fraunces), serif; font-size: var(--size-h2); font-weight: 560; }
+	.t-h3 { font-family: var(--font-fraunces), serif; font-size: var(--size-h3); font-weight: 580; }
+	.t-h4 { font-size: var(--size-h4); font-weight: 650; }
+	.t-body { font-size: var(--size-body); max-width: 65ch; font-variant-numeric: tabular-nums; }
+	.t-small { font-size: var(--size-small); color: var(--text-muted); }
+	.t-caption { font-size: var(--size-caption); color: var(--text-muted); }
+	.t-mono { font-family: var(--font-mono), monospace; font-size: var(--size-small); }
+
+	.swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-2); margin-block: var(--space-4); }
+	.swatch { border: 1px solid var(--border); padding: var(--space-4) var(--space-3); font-family: var(--font-mono), monospace; font-size: var(--size-caption); }
+	.sw-bg { background: var(--bg); }
+	.sw-raised { background: var(--bg-raised); }
+	.sw-text { background: var(--text); color: var(--bg); }
+	.sw-muted { background: var(--text-muted); color: var(--bg); }
+	.sw-accent { background: var(--accent); color: var(--accent-contrast); }
+	.sw-border { background: var(--border); }
+	table { border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: var(--size-small); }
+	caption { text-align: left; color: var(--text-muted); font-size: var(--size-caption); margin-bottom: var(--space-2); }
+	th, td { text-align: left; padding: var(--space-2) var(--space-4) var(--space-2) 0; border-bottom: 1px solid var(--border); }
+
+	.space-bars { display: grid; gap: var(--space-2); margin-top: var(--space-4); }
+	.space-bars div { background: var(--accent); block-size: 1.1rem; position: relative; min-inline-size: 2px; }
+	.space-bars span { position: absolute; inset-inline-start: calc(100% + 0.75rem); top: 50%; translate: 0 -50%; font-family: var(--font-mono), monospace; font-size: var(--size-caption); color: var(--text-muted); white-space: nowrap; }
+
+	.chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+	.chip { display: inline-block; font-size: var(--size-caption); border: 1px solid var(--border); padding: 0.2rem 0.7rem; color: var(--text-muted); }
+	.chip-live { color: var(--accent); border-color: var(--accent); }
+	.btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block: var(--space-5); }
+	.btn { display: inline-block; padding: 0.7rem 1.4rem; font-weight: 600; text-decoration: none; border: 1px solid transparent; transition: opacity var(--motion-quick) var(--ease-out); }
+	.btn:hover { opacity: 0.85; }
+	.btn-primary { background: var(--accent); color: var(--accent-contrast); }
+	.btn-secondary { border-color: var(--text); color: var(--text); }
+	.btn-ghost { color: var(--accent); }
+	.card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: var(--space-4); margin-block: var(--space-5); }
+	.card { border: 1px solid var(--border); padding: var(--space-4); display: grid; gap: var(--space-3); align-content: start; justify-items: start; }
+	.callout { border: 1px solid var(--border); border-inline-start: 3px solid var(--accent); padding: var(--space-3) var(--space-4); max-width: 65ch; margin-block: var(--space-5); }
+	.callout .t-small { color: var(--text); }
+	figure { margin-block: var(--space-5); }
+	.code { background: var(--bg-raised); border: 1px solid var(--border); padding: var(--space-4); overflow-x: auto; font-family: var(--font-mono), monospace; font-size: var(--size-small); line-height: 1.55; margin-bottom: var(--space-2); }
+	.code code { font-family: inherit; }
+
+	.frame-404 { border: 1px dashed var(--border); padding: var(--space-6) var(--space-4); display: grid; gap: var(--space-3); justify-items: center; text-align: center; }
+	.nf-code { font-size: clamp(4rem, 14vw, 9rem); margin: 0; }
+
+	.colophon { border-top: 1px solid var(--border); padding-top: var(--space-4); display: grid; gap: var(--space-2); }
+
+	@media (prefers-reduced-motion: reduce) {
+		a, .btn { transition: none; }
+	}
+</style>

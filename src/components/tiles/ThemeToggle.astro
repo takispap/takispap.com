@@ -1,0 +1,22 @@
+{/* System-default theme with a manual override (takis, 2026-07-12). Cycles system → dark → light. Progressive: without JS the site simply follows the system. */}
+<button type="button" id="theme-toggle">theme: system</button>
+<script is:inline>
+	(() => {
+		const btn = document.getElementById('theme-toggle');
+		if (!btn) return;
+		const modes = ['system', 'dark', 'light'];
+		let mode = document.documentElement.dataset.theme || 'system';
+		btn.textContent = 'theme: ' + mode;
+		btn.addEventListener('click', () => {
+			mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+			if (mode === 'system') {
+				delete document.documentElement.dataset.theme;
+				try { localStorage.removeItem('tp-theme'); } catch {}
+			} else {
+				document.documentElement.dataset.theme = mode;
+				try { localStorage.setItem('tp-theme', mode); } catch {}
+			}
+			btn.textContent = 'theme: ' + mode;
+		});
+	})();
+</script>

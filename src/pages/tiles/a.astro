@@ -5,7 +5,8 @@ import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
 import Icon from '../../components/tiles/Icon.astro';
 import Mark from '../../components/tiles/Mark.astro';
 
-// per-word reveal helpers — static spans, no client JS
+// per-word reveal helpers — static spans, no client JS.
+// Each word = clip box (.w) + inner riser (.wi): words rise from behind their line, lusion-register.
 const words = (s) => s.split(' ');
 const heroLine = 'Making complex things clear.';
 const heroSub = 'Twenty years through paper, web, VR, design systems and AI. The medium keeps changing; the job hasn’t.';
@@ -41,17 +42,17 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 			<section class="hero">
 				<p class="eyebrow" style="view-transition-name: tile-a">Takis Papadopoulos · Senior product designer · Athens</p>
 				<h1 class="display intro-words">
-					{words(heroLine).map((w, i) => <span class="w" style={`--i:${i}`}>{w}</span>)}
+					{words(heroLine).map((w, i) => <span class="w" style={`--i:${i}`}><span class="wi">{w}</span></span>)}
 				</h1>
 				<p class="sub intro-words">
-					{words(heroSub).map((w, i) => <span class="w" style={`--i:${i + 5}`}>{w}</span>)}
+					{words(heroSub).map((w, i) => <span class="w" style={`--i:${i + 5}`}><span class="wi">{w}</span></span>)}
 				</p>
 			</section>
 
 			<section class="reveal" aria-labelledby="feel-h">
 				<h2 id="feel-h">Feel</h2>
 				<p class="lead reveal-words">
-					{words(feelLead).map((w, i) => <span class="w" style={`--i:${i % 14}`}>{w}</span>)}
+					{words(feelLead).map((w, i) => <span class="w" style={`--i:${i % 14}`}><span class="wi">{w}</span></span>)}
 				</p>
 				<p class="chips" role="list">
 					<span class="chip" role="listitem">minimal</span>
@@ -105,7 +106,7 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 
 			<section class="reveal" aria-labelledby="space-h">
 				<h2 id="space-h">Space &amp; layout</h2>
-				<p class="prose-measure">No fixed page width: the layout breathes with the screen through fluid side paddings (<code>clamp(1.25rem, 5vw, 7rem)</code>) — as much screen as the content can hold, with empty space doing the composing. Corners round where the hand goes (buttons, cards, code), stay quiet elsewhere.</p>
+				<p class="prose-measure">No fixed page width: the layout breathes with the screen through fluid side paddings (<code>clamp(1.25rem, 5vw, 7rem)</code>) — as much screen as the content can hold, with empty space doing the composing. Corners round where the hand goes — buttons run pill, cards and code round with a radius that scales with the screen (clamp), text and structure stay quiet.</p>
 				<div class="space-bars">
 					<div style="inline-size: var(--space-1)"><span>1 · 0.25rem</span></div>
 					<div style="inline-size: var(--space-2)"><span>2 · 0.5rem</span></div>
@@ -121,7 +122,7 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 				<h2 id="comp-h">Components</h2>
 
 				<p class="lead reveal-words prose-measure">
-					{words(bioLead).map((w, i) => <span class="w" style={`--i:${i % 14}`}>{w}</span>)}
+					{words(bioLead).map((w, i) => <span class="w" style={`--i:${i % 14}`}><span class="wi">{w}</span></span>)}
 				</p>
 				<p class="t-body prose-measure">These days I split my time between product work and <a href="/tiles/">Zeus</a>, the local-AI studio humming under my desk.</p>
 
@@ -233,15 +234,18 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 		--space-5: 2.5rem; --space-6: 4rem; --space-7: 6.5rem;
 		--pad-x: clamp(1.25rem, 5vw, 7rem);
 
-		/* motion */
-		--motion-quick: 120ms;
-		--motion-base: 240ms;
+		/* motion — fluid and eased (lusion register): quick for presses, base for hovers, slow for sweeps */
+		--motion-quick: 140ms;
+		--motion-base: 400ms;
+		--motion-slow: 780ms;
 		--ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+		--ease-fluid: cubic-bezier(0.65, 0, 0.35, 1);
+		--ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
 
-		/* corners — rounded where the hand goes */
-		--radius-s: 8px;
-		--radius-m: 14px;
-		--radius-l: 22px;
+		/* corners — rounded where the hand goes, radius scales with the screen */
+		--radius-s: clamp(6px, 0.4vw + 4px, 10px);
+		--radius-m: clamp(12px, 1vw + 8px, 20px);
+		--radius-l: clamp(18px, 2vw + 12px, 34px);
 
 		/* focus halo */
 		--halo: 0 0 0 2px var(--bg), 0 0 0 6px color-mix(in oklab, var(--accent) 45%, transparent);
@@ -262,14 +266,14 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 	/* header / nav */
 	.site { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-4) var(--pad-x); }
 	.mark { display: inline-flex; border-radius: 999px; }
-	.mark .tp-mark { transition: rotate var(--motion-base) var(--ease-out), scale var(--motion-base) var(--ease-out); }
+	.mark .tp-mark { transition: rotate var(--motion-base) var(--ease-settle), scale var(--motion-base) var(--ease-settle); }
 	.mark:hover .tp-mark, .mark:focus-visible .tp-mark { rotate: -8deg; scale: 1.06; }
 	.nav-sample { display: flex; gap: var(--space-4); flex-wrap: wrap; }
 	.u-link {
 		color: var(--text); text-decoration: none; font-weight: 550; padding-block: 0.15rem;
 		background-image: linear-gradient(var(--accent), var(--accent));
 		background-size: 0% 2px; background-position: 0 100%; background-repeat: no-repeat;
-		transition: background-size var(--motion-base) var(--ease-out), color var(--motion-quick) var(--ease-out);
+		transition: background-size var(--motion-base) var(--ease-settle), color var(--motion-quick) var(--ease-out);
 	}
 	.u-link:hover, .u-link:focus-visible { background-size: 100% 2px; }
 	.u-link.is-current { color: var(--accent); background-size: 100% 2px; }
@@ -298,10 +302,11 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 	}
 	.sub { font-size: var(--size-h4); color: var(--text-muted); max-width: 52ch; }
 
-	/* per-word spans */
-	.intro-words .w, .reveal-words .w { display: inline-block; }
+	/* per-word spans — clip box + riser: words rise from behind their own line */
+	.intro-words .w, .reveal-words .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-block-end: 0.06em; margin-block-end: -0.06em; }
 	.intro-words .w { margin-inline-end: 0.24em; }
 	.reveal-words .w { margin-inline-end: 0.22em; }
+	.w .wi { display: inline-block; }
 
 	/* type specimen */
 	.spec-note { color: var(--text-muted); margin-block-end: var(--space-4); }
@@ -340,29 +345,30 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 	.chip-live { color: var(--accent); border-color: var(--accent); }
 	.btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block: var(--space-5); }
 	.btn {
-		display: inline-flex; align-items: center; gap: 0.5rem;
-		padding: 0.7rem 1.4rem; border-radius: var(--radius-m); font-weight: 650; text-decoration: none;
-		transition: translate var(--motion-quick) var(--ease-out), scale var(--motion-quick) var(--ease-out), border-color var(--motion-quick) var(--ease-out);
+		display: inline-flex; align-items: center; gap: 0.55rem;
+		padding: 0.75em 1.5em; border-radius: 999px; font-weight: 650; text-decoration: none;
+		transition: translate var(--motion-base) var(--ease-settle), scale var(--motion-quick) var(--ease-out), border-color var(--motion-base) var(--ease-settle), background var(--motion-base) var(--ease-settle);
 	}
-	.btn .icon { transition: translate var(--motion-base) var(--ease-out); }
+	.btn .icon { transition: translate var(--motion-base) var(--ease-settle); }
 	.btn:hover { translate: 0 -2px; }
-	.btn:active { translate: 0 0; scale: 0.97; }
-	.btn:hover [class*='arrow-right'] { }
+	.btn:active { translate: 0 0; scale: 0.96; }
 	.btn-primary { background: var(--accent); color: var(--accent-contrast); }
-	.btn-primary:hover .icon { translate: 3px 0; }
+	.btn-primary:hover { background: color-mix(in oklab, var(--accent) 88%, var(--text)); }
+	.btn-primary:hover .icon { translate: 4px 0; }
 	.btn-secondary { border: 1px solid var(--text); color: var(--text); }
+	.btn-secondary:hover { background: var(--bg-raised); }
 	.btn-secondary:hover .icon { translate: 0 2px; }
 	.btn-ghost { color: var(--accent); }
-	.btn-ghost:hover .icon { translate: 2px -2px; }
+	.btn-ghost:hover .icon { translate: 3px -3px; }
 	.card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: var(--space-4); margin-block: var(--space-5); }
 	.card {
 		background: var(--bg-raised); border: 1px solid transparent; border-radius: var(--radius-m);
 		padding: var(--space-5) var(--space-4); display: grid; gap: var(--space-3); align-content: start; justify-items: start;
-		transition: translate var(--motion-base) var(--ease-out), border-color var(--motion-base) var(--ease-out);
+		transition: translate var(--motion-base) var(--ease-settle), border-color var(--motion-base) var(--ease-settle);
 	}
-	.card:hover, .card:focus-within { translate: 0 -3px; border-color: var(--accent); }
+	.card:hover, .card:focus-within { translate: 0 -4px; border-color: var(--accent); }
 	.card-link { color: var(--accent); display: inline-flex; align-items: center; gap: 0.35rem; }
-	.card-link .icon { transition: translate var(--motion-base) var(--ease-out); }
+	.card-link .icon { transition: translate var(--motion-base) var(--ease-settle); }
 	.card:hover .card-link .icon, .card-link:focus-visible .icon { translate: 2px -2px; }
 	.callout { border-inline-start: 3px solid var(--accent); background: var(--bg-raised); padding: var(--space-3) var(--space-4); border-radius: 0 var(--radius-s) var(--radius-s) 0; max-width: 72ch; margin-block: var(--space-5); }
 	.callout .t-small { color: var(--text); }
@@ -378,29 +384,29 @@ const bioLead = 'I’ve designed food-delivery flows, VR tours of ancient stadiu
 	.colophon { border-top: 1px solid var(--border); padding-block: var(--space-4) var(--space-6); display: grid; gap: var(--space-2); }
 
 	/* ---- motion registers ---- */
-	@keyframes rise { from { opacity: 0; translate: 0 1.5rem; } to { opacity: 1; translate: 0 0; } }
-	@keyframes word-in { from { opacity: 0.15; } to { opacity: 1; } }
-	@keyframes word-up { to { opacity: 1; translate: 0 0; } }
+	@keyframes rise { from { opacity: 0; translate: 0 2rem; } to { opacity: 1; translate: 0 0; } }
+	@keyframes riser-up { from { translate: 0 115%; } to { translate: 0 0; } }
+	@keyframes riser-scroll { from { translate: 0 115%; opacity: 0.4; } to { translate: 0 0; opacity: 1; } }
 	@keyframes fade-down { from { opacity: 0; translate: 0 -0.5rem; } to { opacity: 1; translate: 0 0; } }
 
-	/* intro (load) */
+	/* intro (load) — words rise from behind the line, long settle */
 	@media (prefers-reduced-motion: no-preference) {
-		.site { opacity: 0; animation: fade-down 500ms var(--ease-out) 60ms forwards; }
-		.intro-words .w { opacity: 0; translate: 0 0.4em; animation: word-up 560ms var(--ease-out) forwards; animation-delay: calc(120ms + var(--i) * 50ms); }
+		.site { opacity: 0; animation: fade-down 700ms var(--ease-settle) 80ms forwards; }
+		.intro-words .wi { translate: 0 115%; animation: riser-up 900ms var(--ease-settle) forwards; animation-delay: calc(140ms + var(--i) * 55ms); }
 	}
 
 	/* appear + per-word scroll reveal (scroll timeline, progressive) */
 	@supports (animation-timeline: view()) {
 		@media (prefers-reduced-motion: no-preference) {
 			.reveal {
-				animation: rise 1ms linear both;
+				animation: rise 1ms var(--ease-settle) both;
 				animation-timeline: view();
-				animation-range: entry 0% entry 55%;
+				animation-range: entry 0% entry 60%;
 			}
-			.reveal-words .w {
-				animation: word-in 1ms linear both;
+			.reveal-words .wi {
+				animation: riser-scroll 1ms var(--ease-settle) both;
 				animation-timeline: view();
-				animation-range: entry calc(8% + var(--i) * 2.5%) entry calc(38% + var(--i) * 2.5%);
+				animation-range: entry calc(6% + var(--i) * 2.5%) entry calc(42% + var(--i) * 2.5%);
 			}
 		}
 	}

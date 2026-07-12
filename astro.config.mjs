@@ -28,5 +28,24 @@ export default defineConfig({
     localFont('Bricolage Grotesque VF', '--font-bricolage', 'bricolage-vf.woff2', '200 800', '75% 100%'),
     localFont('Instrument Sans VF', '--font-instrument', 'instrument-sans-vf.woff2', '400 700', '75% 100%'),
     localFont('JetBrains Mono VF', '--font-mono', 'jetbrains-mono-vf.woff2', '100 800'),
+    // takis's Fontshare/free shortlist (2026-07-12) — /tiles/fonts specimen page
+    localFont('Epilogue VF', '--font-epilogue', 'epilogue-vf.woff2', '100 900'),
+    localFont('Sora VF', '--font-sora', 'sora-vf.woff2', '100 800'),
+    localFont('Spline Sans VF', '--font-spline', 'spline-sans-vf.woff2', '300 700'),
+    localFont('Plus Jakarta Sans VF', '--font-jakarta', 'plus-jakarta-vf.woff2', '200 800'),
+    localFont('Outfit VF', '--font-outfit', 'outfit-vf.woff2', '100 900'),
+    localFont('General Sans VF', '--font-general', 'general-sans-vf.woff2', '200 700'),
+    {
+      // Poppins has no variable version — two static weights for comparison
+      provider: fontProviders.local(),
+      name: 'Poppins',
+      cssVariable: '--font-poppins',
+      options: {
+        variants: [
+          { src: ['./src/assets/fonts/poppins-400.woff2'], weight: '400', style: 'normal' },
+          { src: ['./src/assets/fonts/poppins-700.woff2'], weight: '700', style: 'normal' },
+        ],
+      },
+    },
   ],
 });

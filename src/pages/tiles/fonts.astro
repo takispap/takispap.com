@@ -1,0 +1,227 @@
+---
+import { Font } from 'astro:assets';
+import ThemeInit from '../../components/tiles/ThemeInit.astro';
+import ThemeToggle from '../../components/tiles/ThemeToggle.astro';
+
+const faces = [
+	{
+		id: 'epilogue', varName: '--font-epilogue', name: 'Epilogue', foundry: 'Etcetera Type Co (via Google Fonts)', licence: 'SIL OFL — self-host + subset OK',
+		axes: 'wght 100–900 (+ italic available)', min: 100, max: 900,
+		fit: 'A display · C display', risk: 'low overuse — distinctive at heavy weights',
+	},
+	{
+		id: 'sora', varName: '--font-sora', name: 'Sora', foundry: 'Jonathan Barnbrook (via Google Fonts)', licence: 'SIL OFL — self-host + subset OK',
+		axes: 'wght 100–800', min: 100, max: 800,
+		fit: 'A/C display — geometric-tech, Lab energy', risk: 'low overuse',
+	},
+	{
+		id: 'general', varName: '--font-general', name: 'General Sans', foundry: 'Indian Type Foundry (Fontshare)', licence: 'ITF Free Font Licence — free commercial; serve files as provided (no modification/subsetting)',
+		axes: 'wght 200–700 (+ italic available)', min: 200, max: 700,
+		fit: 'C display · body anywhere', risk: 'rising in portfolio-land — still distinctive',
+	},
+	{
+		id: 'outfit', varName: '--font-outfit', name: 'Outfit', foundry: 'On Brand Investments (via Google Fonts)', licence: 'SIL OFL — self-host + subset OK',
+		axes: 'wght 100–900', min: 100, max: 900,
+		fit: 'B/C display alternative — geometric, friendly', risk: 'medium — growing template usage',
+	},
+	{
+		id: 'spline', varName: '--font-spline', name: 'Spline Sans', foundry: 'SHINNTYPE / Google (via Google Fonts)', licence: 'SIL OFL — self-host + subset OK',
+		axes: 'wght 300–700 (grotesque, made for UI density)', min: 300, max: 700,
+		fit: 'body / UI text', risk: 'low overuse — quiet by design',
+	},
+	{
+		id: 'jakarta', varName: '--font-jakarta', name: 'Plus Jakarta Sans', foundry: 'Tokotype (via Google Fonts)', licence: 'SIL OFL — self-host + subset OK',
+		axes: 'wght 200–800 (+ italic available)', min: 200, max: 800,
+		fit: 'body alternative', risk: 'medium-high — very common in SaaS UI',
+	},
+	{
+		id: 'poppins', varName: '--font-poppins', name: 'Poppins', foundry: 'Indian Type Foundry (via Google Fonts)', licence: 'SIL OFL — self-host + subset OK',
+		axes: 'NO variable version — static weights (400 + 700 loaded here)', min: 400, max: 700, static: true,
+		fit: 'comparison only', risk: 'HIGH — the template-shop default of the 2020s; fails the template test hardest',
+	},
+	{
+		id: 'mono', varName: '--font-mono', name: 'JetBrains Mono', foundry: 'JetBrains (via Google Fonts)', licence: 'SIL OFL — self-host + subset OK',
+		axes: 'wght 100–800 (+ code ligatures)', min: 100, max: 800, mono: true,
+		fit: 'the mono, all directions — already in the tiles', risk: 'common in dev tools; fine for code',
+	},
+];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Font specimens — takis's shortlist</title>
+		{faces.map((f) => <Font cssVariable={f.varName} />)}
+		<ThemeInit />
+	</head>
+	<body>
+		<header class="site">
+			<a class="mark" href="/tiles/"><img src="/logo.svg" alt="tp mark — back to tile index" width="36" height="36" /></a>
+			<p class="tile-tag">Font specimens — takis's shortlist</p>
+			<div class="controls">
+				<div class="accent-picker" role="group" aria-label="Accent colour">
+					<button type="button" class="ac" data-accent="amber" aria-pressed="true" title="amber"></button>
+					<button type="button" class="ac" data-accent="olive" aria-pressed="false" title="olive"></button>
+					<button type="button" class="ac" data-accent="day" aria-pressed="false" title="sky blue"></button>
+					<button type="button" class="ac" data-accent="night" aria-pressed="false" title="violet"></button>
+				</div>
+				<ThemeToggle />
+			</div>
+		</header>
+
+		<main>
+			<p class="intro">Your eight, live and adaptive. Same words everywhere so only the face changes. Drag a weight slider, flip theme and accent, hover a card for its facts. Pick one or two — the winning tile gets re-cut with your pick. The premium shortlist (moodboard) still stands if none of these earns the display role.</p>
+
+			{faces.map((f) => (
+				<section class="face" aria-labelledby={`f-${f.id}`} style={`--face: var(${f.varName}), ${f.mono ? 'monospace' : 'sans-serif'}; --w: ${f.static ? 700 : Math.min(760, f.max)};`}>
+					<div class="face-head">
+						<h2 id={`f-${f.id}`}>{f.name}</h2>
+						{!f.static ? (
+							<label class="wght">
+								<span class="t-caption">weight</span>
+								<input type="range" min={f.min} max={f.max} value={Math.min(760, f.max)} data-wght />
+							</label>
+						) : (
+							<p class="t-caption">static 400 / 700 — no axis to drag</p>
+						)}
+					</div>
+					<p class="spec-display">Complex, made clear.</p>
+					<p class="spec-ramp" style={`font-weight: ${f.min}`}>Twenty years — paper, web, VR, systems, AI.</p>
+					<p class="spec-body">I've designed food-delivery flows, VR tours of ancient stadiums, enterprise design systems and a gaming social network. The losses taught me more than the wins. 0123456789 — “quotes”, ligatures, fi ffl.</p>
+					<div class="face-meta">
+						<dl>
+							<div><dt>Foundry</dt><dd>{f.foundry}</dd></div>
+							<div><dt>Licence</dt><dd>{f.licence}</dd></div>
+							<div><dt>Axes / features</dt><dd>{f.axes}</dd></div>
+							<div><dt>Direction fit</dt><dd>{f.fit}</dd></div>
+							<div><dt>Overuse risk</dt><dd>{f.risk}</dd></div>
+						</dl>
+					</div>
+				</section>
+			))}
+
+			<footer class="colophon">
+				<p class="t-caption">All faces self-hosted woff2 (latin slices; General Sans = Fontshare's provided variable file, served unmodified per its licence). Hover/focus lights a card and reveals its facts — the subtle-interaction register from the fontshare.com reference; on touch the facts are always visible. [opus + takis: shortlist 1–2 faces → winning tile re-cut → design.md]</p>
+			</footer>
+		</main>
+
+		<script is:inline>
+			// weight sliders (variable faces only) + accent picker
+			(() => {
+				document.querySelectorAll('[data-wght]').forEach((r) => {
+					r.addEventListener('input', () => r.closest('.face').style.setProperty('--w', r.value));
+				});
+				const accents = { amber: 'var(--acc-amber)', olive: 'var(--acc-olive)', day: 'var(--acc-day)', night: 'var(--acc-night)' };
+				document.querySelectorAll('[data-accent]').forEach((b) => {
+					b.addEventListener('click', () => {
+						document.documentElement.style.setProperty('--accent', accents[b.dataset.accent]);
+						document.querySelectorAll('[data-accent]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+					});
+				});
+			})();
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	:root { color-scheme: light dark; }
+	:root[data-theme='light'] { color-scheme: light; }
+	:root[data-theme='dark'] { color-scheme: dark; }
+	@view-transition { navigation: auto; }
+
+	:root {
+		/* neutral warm judging room (tile C neutrals) */
+		--bg: #fbf6ef;
+		--bg: light-dark(oklch(97.5% 0.011 76.6), oklch(19.6% 0.01 52.9));
+		--bg-raised: #f4eee4;
+		--bg-raised: light-dark(oklch(95.1% 0.015 80.7), oklch(23.7% 0.016 62.6));
+		--text: #211a14;
+		--text: light-dark(oklch(22.4% 0.016 62.5), oklch(94% 0.013 71.3));
+		--text-muted: #6b5f53;
+		--text-muted: light-dark(oklch(49.3% 0.024 67.2), oklch(69.6% 0.023 69.7));
+		--border: #e0d6c8;
+		--border: light-dark(oklch(88% 0.022 76.5), oklch(33.2% 0.019 63.8));
+
+		/* accent picker candidates — all AA both themes (measured in tile C) */
+		--acc-amber: #8a5a1f;
+		--acc-amber: light-dark(oklch(50.9% 0.096 67.6), oklch(76.1% 0.131 67.6));
+		--acc-olive: #44541f;
+		--acc-olive: light-dark(oklch(41.9% 0.079 123.9), oklch(80% 0.106 119.8));
+		--acc-day: #22608f;
+		--acc-day: light-dark(oklch(47.3% 0.099 245.2), oklch(74.8% 0.08 241.7));
+		--acc-night: #5f4ba8;
+		--acc-night: light-dark(oklch(48.2% 0.143 289.8), oklch(73.3% 0.111 293.6));
+		--accent: var(--acc-amber);
+		--focus-ring: var(--accent);
+
+		--size-caption: 0.8125rem;
+		--motion-quick: 120ms;
+		--ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+		--radius: 8px;
+	}
+
+	* { box-sizing: border-box; margin: 0; }
+	body {
+		background: var(--bg); color: var(--text);
+		font-family: system-ui, sans-serif;
+		line-height: 1.6;
+		padding: clamp(1rem, 4vw, 3rem);
+		max-width: 68rem; margin-inline: auto;
+	}
+	:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; border-radius: 4px; }
+	a { color: var(--accent); }
+
+	.site { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+	.tile-tag { font-size: 0.875rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+	.controls { display: flex; align-items: center; gap: 1rem; }
+	.accent-picker { display: flex; gap: 0.4rem; }
+	.ac { inline-size: 1.5rem; block-size: 1.5rem; border-radius: 999px; border: 2px solid transparent; cursor: pointer; padding: 0; }
+	.ac[aria-pressed='true'] { border-color: var(--text); }
+	.ac[data-accent='amber'] { background: var(--acc-amber); }
+	.ac[data-accent='olive'] { background: var(--acc-olive); }
+	.ac[data-accent='day'] { background: var(--acc-day); }
+	.ac[data-accent='night'] { background: var(--acc-night); }
+	#theme-toggle { font: inherit; font-size: var(--size-caption); cursor: pointer; padding: 0.4rem 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-raised); color: var(--text); }
+
+	.intro { max-width: 65ch; margin-bottom: 3rem; }
+	.t-caption { font-size: var(--size-caption); color: var(--text-muted); }
+
+	.face {
+		border: 1px solid var(--border); border-radius: var(--radius);
+		padding: clamp(1.25rem, 3vw, 2.5rem); margin-bottom: 1.5rem;
+		transition: border-color var(--motion-quick) var(--ease-out), background var(--motion-quick) var(--ease-out);
+	}
+	.face:hover, .face:focus-within { border-color: var(--accent); background: var(--bg-raised); }
+	.face-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+	.face h2 { font-family: var(--face); font-weight: 600; font-size: 1.15rem; letter-spacing: 0.01em; }
+	.wght { display: flex; align-items: center; gap: 0.6rem; }
+	.wght input { accent-color: var(--accent); }
+
+	.spec-display {
+		font-family: var(--face);
+		font-weight: var(--w, 700);
+		font-size: clamp(2.4rem, 1rem + 6.5vw, 5.5rem);
+		line-height: 1.02; letter-spacing: -0.02em;
+		margin-bottom: 0.75rem;
+		transition: font-weight var(--motion-quick) linear;
+	}
+	.spec-ramp { font-family: var(--face); font-size: clamp(1.2rem, 1rem + 1.2vw, 1.8rem); color: var(--text-muted); margin-bottom: 1rem; }
+	.spec-body { font-family: var(--face); font-weight: 420; max-width: 62ch; margin-bottom: 1.25rem; font-variant-numeric: tabular-nums; }
+
+	/* hover-reveal register (fontshare ref): facts fade in on hover/focus; always visible when hover is unavailable */
+	.face-meta { opacity: 0.35; transition: opacity var(--motion-quick) var(--ease-out); }
+	.face:hover .face-meta, .face:focus-within .face-meta { opacity: 1; }
+	@media (hover: none) { .face-meta { opacity: 1; } }
+	.face-meta dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.75rem 1.5rem; font-size: var(--size-caption); }
+	.face-meta dt { color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.7rem; margin-bottom: 0.15rem; }
+
+	.colophon { border-top: 1px solid var(--border); padding-top: 1.25rem; margin-top: 2.5rem; }
+
+	@media (prefers-reduced-motion: reduce) {
+		.face, .face-meta, .spec-display { transition: none; }
+	}
+</style>
